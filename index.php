@@ -20,13 +20,13 @@ $tasks = [
     [
         'task' => 'Сделать задание первого раздела',
         'completion_date' => '21.12.2019',
-        'Категория' => 'Учеба',
+        'Category' => 'Учеба',
         'Done' => true
     ],
     [
         'task' => 'Встреча с другом',
         'completion_date' => '22.12.2019',
-        'Категория' => 'Входящие',
+        'Category' => 'Входящие',
         'Done' => false
     ],
     [
@@ -42,7 +42,18 @@ $tasks = [
         'Done' => false
     ]
 ];
+
+function count_task($arr, $projectname) {
+    $count = 0;
+    foreach($arr as $task) {
+        if ($task['Category'] === $projectname) {
+            $count++;
+        }
+    };
+    print($count);
+};
 ?>
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -86,7 +97,7 @@ $tasks = [
                     <?php foreach ($projects as $num => $project): ?>
                         <li class="main-navigation__list-item <?php if ($num == 0):?> main-navigation__list-item--active <?php endif?>">
                             <a class="main-navigation__list-item-link" href="#"><?= $project ?></a>
-                            <span class="main-navigation__list-item-count">0</span>
+                            <span class="main-navigation__list-item-count"><?php count_task($tasks, $project)?></span>
                         </li>
                     <?php endforeach; ?>
                     </ul>
