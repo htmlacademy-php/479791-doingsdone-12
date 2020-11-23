@@ -50,7 +50,7 @@ function count_task($arr, $projectname) {
             $count++;
         }
     };
-    print($count);
+    return($count);
 };
 ?>
 
@@ -95,9 +95,9 @@ function count_task($arr, $projectname) {
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
                     <?php foreach ($projects as $num => $project): ?>
-                        <li class="main-navigation__list-item <?php if ($num == 0):?> main-navigation__list-item--active <?php endif?>">
+                        <li class="main-navigation__list-item <?= ($num == 0) ? 'main-navigation__list-item--active':''?>">
                             <a class="main-navigation__list-item-link" href="#"><?= $project ?></a>
-                            <span class="main-navigation__list-item-count"><?php count_task($tasks, $project)?></span>
+                            <span class="main-navigation__list-item-count"><?= count_task($tasks, $project)?></span>
                         </li>
                     <?php endforeach; ?>
                     </ul>
@@ -134,7 +134,7 @@ function count_task($arr, $projectname) {
                 <table class="tasks">
                 <?php foreach ($tasks as $task):?>
                     <?php if ($task['Done'] === true && $show_complete_tasks === 0) {continue;} ?>
-                    <tr class="tasks__item task <?php if ($task['Done'] === true):?> task--completed <?php endif?>">
+                    <tr class="tasks__item task <?= ($task['Done'] === true) ? 'task--completed':''?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
                                 <input class="checkbox__input visually-hidden" type="checkbox">
