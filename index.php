@@ -20,13 +20,13 @@ $tasks = [
     [
         'task' => 'Сделать задание первого раздела',
         'completion_date' => '21.12.2019',
-        'Категория' => 'Учеба',
+        'Category' => 'Учеба',
         'Done' => true
     ],
     [
         'task' => 'Встреча с другом',
         'completion_date' => '22.12.2019',
-        'Категория' => 'Входящие',
+        'Category' => 'Входящие',
         'Done' => false
     ],
     [
@@ -42,7 +42,18 @@ $tasks = [
         'Done' => false
     ]
 ];
+
+function count_task($arr, $projectname) {
+    $count = 0;
+    foreach($arr as $task) {
+        if ($task['Category'] === $projectname) {
+            $count++;
+        }
+    };
+    return($count);
+};
 ?>
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -84,9 +95,9 @@ $tasks = [
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
                     <?php foreach ($projects as $num => $project): ?>
-                        <li class="main-navigation__list-item <?php if ($num == 0) print("main-navigation__list-item--active"); ?>">
+                        <li class="main-navigation__list-item <?= ($num == 0) ? 'main-navigation__list-item--active':''?>">
                             <a class="main-navigation__list-item-link" href="#"><?= $project ?></a>
-                            <span class="main-navigation__list-item-count">0</span>
+                            <span class="main-navigation__list-item-count"><?= count_task($tasks, $project)?></span>
                         </li>
                     <?php endforeach; ?>
                     </ul>
@@ -123,7 +134,7 @@ $tasks = [
                 <table class="tasks">
                 <?php foreach ($tasks as $task):?>
                     <?php if ($task['Done'] === true && $show_complete_tasks === 0) {continue;} ?>
-                    <tr class="tasks__item task <?php if ($task['Done'] === true) print('task--completed'); ?>">
+                    <tr class="tasks__item task <?= ($task['Done'] === true) ? 'task--completed':''?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
                                 <input class="checkbox__input visually-hidden" type="checkbox">
