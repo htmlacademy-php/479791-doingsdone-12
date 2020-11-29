@@ -1,15 +1,3 @@
-<?php
-function count_task($arr, $projectname) {
-  $count = 0;
-  foreach($arr as $task) {
-      if ($task['Category'] === $projectname) {
-          $count++;
-      }
-  };
-  return($count);
-};
-?>
-
 <div class="content">
     <section class="content__side">
         <h2 class="content__side-heading">Проекты</h2>
