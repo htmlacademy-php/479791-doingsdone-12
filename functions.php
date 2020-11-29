@@ -25,4 +25,12 @@ function count_task($arr, $projectname) {
     };
     return($count);
 };
+
+function date_overdue($date) {
+    if ($date !== null) {
+        $diff = strtotime($date) - strtotime("now");
+        $hours_count = floor($diff/3600);
+        return $hours_count;
+    };
+};
 ?>
