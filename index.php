@@ -7,25 +7,25 @@ $projects = ['Все', 'Входящие', 'Учеба', 'Работа', 'Дом
 $tasks = [
     [
         'task' => 'Собеседование в IT компании',
-        'completion_date' => date_create('01-12-2020'),
+        'completion_date' => '01-12-2020',
         'Category' => 'Работа',
         'Done' => false
     ],
     [
         'task' => 'Выполнить тестовое задание',
-        'completion_date' => date_create('2020-11-29'),
+        'completion_date' => '2020-11-29',
         'Category' => 'Работа',
         'Done' => false
     ],
     [
         'task' => 'Сделать задание первого раздела',
-        'completion_date' => date_create('2020-12-21'),
+        'completion_date' => '2020-12-21',
         'Category' => 'Учеба',
         'Done' => true
     ],
     [
         'task' => 'Встреча с другом',
-        'completion_date' => date_create('2020-12-22'),
+        'completion_date' => '2020-12-22',
         'Category' => 'Входящие',
         'Done' => false
     ],

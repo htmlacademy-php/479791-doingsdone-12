@@ -53,7 +53,7 @@
                 </td>
 
                 <td class="task__date">
-                    <?= (!empty($task['completion_date'])) ? (date_format($task['completion_date'],'d.m.Y')):'' ?>
+                    <?= (!empty($task['completion_date'])) ? strftime("%d.%m.%Y", strtotime($task['completion_date'])):'' ?>
                 </td>
             </tr>
         <?php endforeach; ?>

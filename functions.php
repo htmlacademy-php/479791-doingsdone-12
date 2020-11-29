@@ -28,7 +28,7 @@ function count_task($arr, $projectname) {
 
 function date_overdue($date) {
     if ($date !== null) {
-        $diff = date_timestamp_get($date) - strtotime("now");
+        $diff = strtotime($date) - strtotime("now");
         $hours_count = $diff/3600;
         return $hours_count;
     };
