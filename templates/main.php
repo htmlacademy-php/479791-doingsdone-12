@@ -1,4 +1,4 @@
-<?
+<?php
 function count_task($arr, $projectname) {
   $count = 0;
   foreach($arr as $task) {
