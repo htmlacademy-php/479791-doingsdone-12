@@ -44,7 +44,7 @@
         <table class="tasks">
         <?php foreach ($tasks as $task):?>
             <?php if ($task['Done'] === true && $show_complete_tasks === 0) {continue;} ?>
-            <tr class="tasks__item task <?= ($task['Done'] === true) ? 'task--completed':''?>">
+            <tr class="tasks__item task <?= ($task['Done'] === true) ? 'task--completed':''?> <?= ($task['Done'] !== true) && (date_overdue($task['completion_date']) < 24 && $task['completion_date'] !== null) ? 'task--important':''?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden" type="checkbox">
@@ -53,7 +53,7 @@
                 </td>
 
                 <td class="task__date">
-                    <?= htmlspecialchars($task['completion_date']) ?>
+                    <?= ($task['completion_date'] !== null) ? htmlspecialchars(date_format($task['completion_date'],'d.m.Y')):'' ?>
                 </td>
             </tr>
         <?php endforeach; ?>
