@@ -13,19 +13,19 @@ $tasks = [
     ],
     [
         'task' => 'Выполнить тестовое задание',
-        'completion_date' => date_create('29-11-2020'),
+        'completion_date' => date_create('2020-11-29'),
         'Category' => 'Работа',
         'Done' => false
     ],
     [
         'task' => 'Сделать задание первого раздела',
-        'completion_date' => date_create('21-12-2020'),
+        'completion_date' => date_create('2020-12-21'),
         'Category' => 'Учеба',
         'Done' => true
     ],
     [
         'task' => 'Встреча с другом',
-        'completion_date' => date_create('22-12-2020'),
+        'completion_date' => date_create('2020-12-22'),
         'Category' => 'Входящие',
         'Done' => false
     ],
