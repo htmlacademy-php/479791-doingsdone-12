@@ -10,7 +10,7 @@ CREATE TABLE projects (
     user_id INT NOT NULL
 );
 
-CREATE TABLE users (doingsdone
+CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     e_mail VARCHAR(128) NOT NULL UNIQUE,
     user_password CHAR(60) NOT NULL
