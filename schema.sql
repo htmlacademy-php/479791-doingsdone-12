@@ -12,6 +12,7 @@ CREATE TABLE projects (
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    user_name VARCHAR(128) NOT NULL,
     e_mail VARCHAR(128) NOT NULL UNIQUE,
     user_password CHAR(60) NOT NULL
 );
