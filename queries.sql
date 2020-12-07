@@ -23,37 +23,37 @@ INSERT INTO tasks SET user_id = 2,
                      project_id = 4,
                      task_name = 'Собеседование в IT компании',
                      task_deadline = '2020-12-01',
-                     task_done = 0;
+                     task_done = 0
 
 INSERT INTO tasks SET user_id = 2,
                      project_id = 4,
                      task_name = 'Выполнить тестовое задание',
                      task_deadline = '2020-11-29',
-                     task_done = 0;
+                     task_done = 0
 
 INSERT INTO tasks SET user_id = 2,
                      project_id = 3,
                      task_name = 'Сделать задание первого раздела',
                      task_deadline = '2020-12-21',
-                     task_done = 1;
+                     task_done = 1
 
 INSERT INTO tasks SET user_id = 2,
                      project_id = 2,
                      task_name = 'Встреча с другом',
                      task_deadline = '2020-12-22',
-                     task_done = 0;
+                     task_done = 0
 
 INSERT INTO tasks SET user_id = 2,
                      project_id = 5,
                      task_name = 'Купить корм для кота',
                      task_deadline = null;
-                     task_done = 0;
+                     task_done = 0
 
 INSERT INTO tasks SET user_id = 2,
                      project_id = 5,
                      task_name = 'Заказать пиццу',
                      task_deadline = null,
-                     task_done = 0;
+                     task_done = 0
 
 /*Получаем все проекты для одного пользователя Роман*/
 
