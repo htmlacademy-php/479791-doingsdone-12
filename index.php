@@ -7,7 +7,7 @@ $projects = ['Все', 'Входящие', 'Учеба', 'Работа', 'Дом
 $tasks = [
     [
         'task' => 'Собеседование в IT компании',
-        'completion_date' => '01-12-2020',
+        'completion_date' => '2020-12-01',
         'Category' => 'Работа',
         'Done' => false
     ],
