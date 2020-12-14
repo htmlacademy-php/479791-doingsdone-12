@@ -1,4 +1,4 @@
-USE 'doingsdone';
+USE doingsdone;
 /* Добавляем пользователей */
 
 INSERT INTO users SET user_name = 'Руслан',

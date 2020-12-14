@@ -10,9 +10,7 @@ mysqli_set_charset($connect, "utf8");
 if (!$connect) {
     $error = mysqli_connect_error();
     print("Ошибка подключения к базе данных " . $error);
-} else {
-    print("Соединение установлено");
-}
+} 
 
 //добавляем проекты
 
@@ -21,7 +19,6 @@ $result = mysqli_query($connect, $sql_projects);
 
 if($result) {
     $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    print ("Добавлены проекты");
 } else {
     $error = mysqli_error($connect);
     print ("Ошибка MySQL" . $error);
@@ -34,7 +31,6 @@ $result = mysqli_query($connect, $sql_tasks);
 
 if($result) {
     $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    print ("Добавлены задачи");
 } else {
     $error = mysqli_error($connect);
     print ("Ошибка MySQL" . $error);

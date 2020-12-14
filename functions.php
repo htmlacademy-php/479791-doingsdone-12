@@ -16,10 +16,10 @@ function include_template($name, array $data = []) {
     return $result;
 };
 
-function count_task($arr, $projectname) {
+function count_task($arr, $project) {
     $count = 0;
     foreach($arr as $task) {
-        if ($task['Category'] === $projectname) {
+        if ($task['project_id'] === $project || $project === '1') {
             $count++;
         }
     };
