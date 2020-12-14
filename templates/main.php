@@ -4,10 +4,10 @@
 
         <nav class="main-navigation">
             <ul class="main-navigation__list">
-            <?php foreach ($projects as $num => $project): ?>
-                <li class="main-navigation__list-item <?= ($num == 0) ? 'main-navigation__list-item--active':''?>">
-                    <a class="main-navigation__list-item-link" href="#"><?= $project ?></a>
-                    <span class="main-navigation__list-item-count"><?= count_task($tasks, $project)?></span>
+            <?php foreach ($projects as $project): ?>
+                <li class="main-navigation__list-item <?= ($project['id'] == 1) ? 'main-navigation__list-item--active':''?>">
+                    <a class="main-navigation__list-item-link" href="#"><?= $project['project_name'] ?></a>
+                    <span class="main-navigation__list-item-count"><?= count_task($tasks, $project['id'])?></span>
                 </li>
             <?php endforeach; ?>
             </ul>
@@ -43,17 +43,17 @@
 
         <table class="tasks">
         <?php foreach ($tasks as $task):?>
-            <?php if ($task['Done'] === true && $show_complete_tasks === 0) {continue;} ?>
-            <tr class="tasks__item task <?= ($task['Done'] === true) ? 'task--completed':''?> <?= ($task['Done'] !== true) && !empty($task['completion_date']) && (date_overdue($task['completion_date']) <= 24) ? 'task--important':''?>">
+            <?php if ($task['task_done'] === '1' && $show_complete_tasks === 0) {continue;} ?>
+            <tr class="tasks__item task <?= ($task['task_done'] === '1') ? 'task--completed':''?> <?= ($task['task_done'] !== '1') && !empty($task['task_deadline']) && (date_overdue($task['task_deadline']) <= 24) ? 'task--important':''?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden" type="checkbox">
-                        <span class="checkbox__text"><?= htmlspecialchars($task['task']) ?></span>
+                        <span class="checkbox__text"><?= htmlspecialchars($task['task_name']); ?></span>
                     </label>
                 </td>
 
                 <td class="task__date">
-                    <?= (!empty($task['completion_date'])) ? strftime("%d.%m.%Y", strtotime($task['completion_date'])):'' ?>
+                    <?= (!empty($task['task_deadline'])) ? strftime("%d.%m.%Y", strtotime($task['task_deadline'])):'' ?>
                 </td>
             </tr>
         <?php endforeach; ?>
