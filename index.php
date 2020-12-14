@@ -2,46 +2,43 @@
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
 
-$projects = ['Все', 'Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
+//устанавливаем соединение
 
-$tasks = [
-    [
-        'task' => 'Собеседование в IT компании',
-        'completion_date' => '2020-12-01',
-        'Category' => 'Работа',
-        'Done' => false
-    ],
-    [
-        'task' => 'Выполнить тестовое задание',
-        'completion_date' => '2020-11-29',
-        'Category' => 'Работа',
-        'Done' => false
-    ],
-    [
-        'task' => 'Сделать задание первого раздела',
-        'completion_date' => '2020-12-21',
-        'Category' => 'Учеба',
-        'Done' => true
-    ],
-    [
-        'task' => 'Встреча с другом',
-        'completion_date' => '2020-12-22',
-        'Category' => 'Входящие',
-        'Done' => false
-    ],
-    [
-        'task' => 'Купить корм для кота',
-        'completion_date' => null,
-        'Category' => 'Домашние дела',
-        'Done' => false
-    ],
-    [
-        'task' => 'Заказать пиццу',
-        'completion_date' => null,
-        'Category' => 'Домашние дела',
-        'Done' => false
-    ]
-];
+$connect = mysqli_connect ('localhost', 'root', 'root', 'doingsdone');
+mysqli_set_charset($connect, "utf8");
+
+if (!$connect) {
+    $error = mysqli_connect_error();
+    print("Ошибка подключения к базе данных " . $error);
+} else {
+    print("Соединение установлено");
+}
+
+//добавляем проекты
+
+$sql_projects = "SELECT * FROM projects";
+$result = mysqli_query($connect, $sql_projects);
+
+if($result) {
+    $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    print ("Добавлены проекты");
+} else {
+    $error = mysqli_error($connect);
+    print ("Ошибка MySQL" . $error);
+}
+
+//добавляем задачи
+
+$sql_tasks = "SELECT * FROM tasks";
+$result = mysqli_query($connect, $sql_tasks);
+
+if($result) {
+    $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    print ("Добавлены задачи");
+} else {
+    $error = mysqli_error($connect);
+    print ("Ошибка MySQL" . $error);
+}
 
 include 'functions.php';
 
