@@ -14,7 +14,7 @@ if (!$connect) {
 
 //добавляем проекты
 
-$sql_projects = "SELECT * FROM projects";
+$sql_projects = "SELECT * FROM projects WHERE user_id = 2";
 $result = mysqli_query($connect, $sql_projects);
 
 if($result) {
@@ -26,7 +26,7 @@ if($result) {
 
 //добавляем задачи
 
-$sql_tasks = "SELECT * FROM tasks";
+$sql_tasks = "SELECT * FROM tasks WHERE user_id = 2";
 $result = mysqli_query($connect, $sql_tasks);
 
 if($result) {
