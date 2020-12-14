@@ -5,7 +5,7 @@
         <nav class="main-navigation">
             <ul class="main-navigation__list">
             <?php foreach ($projects as $project): ?>
-                <li class="main-navigation__list-item <?= ($id == 0) ? 'main-navigation__list-item--active':''?>">
+                <li class="main-navigation__list-item <?= ($project['id'] == 1) ? 'main-navigation__list-item--active':''?>">
                     <a class="main-navigation__list-item-link" href="#"><?= $project['project_name'] ?></a>
                     <span class="main-navigation__list-item-count"><?= count_task($tasks, $project['id'])?></span>
                 </li>
