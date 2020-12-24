@@ -44,7 +44,6 @@
         <table class="tasks">
         <?php foreach ($tasks as $task):?>
             <?php if (empty($tasks)) {http_response_code(404);} ?>
-            <?php var_dump(http_response_code());?>
             <?php if ($task['task_done'] === '1' && $show_complete_tasks === 0) {continue;} ?>
             <tr class="tasks__item task <?= ($task['task_done'] === '1') ? 'task--completed':''?> <?= ($task['task_done'] !== '1') && !empty($task['task_deadline']) && (date_overdue($task['task_deadline']) <= 24) ? 'task--important':''?>">
                 <td class="task__select">
