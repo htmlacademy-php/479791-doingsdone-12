@@ -11,6 +11,16 @@ if (!$connect) {
     $error = mysqli_connect_error();
     print("Ошибка подключения к базе данных " . $error);
 } 
+//узнаём имя юзера
+$sql_user_name = "SELECT user_name FROM users WHERE id = 2";
+$result = mysqli_query($connect, $sql_user_name);
+
+if($result) {
+    $user_name = mysqli_fetch_all($result, MYSQLI_ASSOC);
+} else {
+    $error = mysqli_error($connect);
+    print ("Ошибка MySQL" . $error);
+}
 
 //добавляем проекты
 
@@ -39,7 +49,7 @@ if($result) {
 include 'functions.php';
 
 $page_content = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks]);
-$layout_content = include_template('layout.php', ['content' => $page_content, 'title' => "Дела в порядке"]); 
+$layout_content = include_template('layout.php', ['content' => $page_content, 'title' => "Дела в порядке", 'user_name' => $user_name]); 
 
 print($layout_content);
 ?>
