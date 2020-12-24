@@ -36,8 +36,11 @@ if($result) {
 
 //добавляем задачи
 
-$sql_tasks = "SELECT * FROM tasks WHERE user_id = 2";
-$result = mysqli_query($connect, $sql_tasks);
+$id = $_GET['id'] ?? '';
+
+$sql_all_tasks = "SELECT * FROM tasks WHERE user_id = 2";
+$sql_tasks = "SELECT * FROM tasks WHERE user_id = 2 AND project_id = $id";
+$result = mysqli_query($connect, ($id && $id !== '1') ? $sql_tasks : $sql_all_tasks);
 
 if($result) {
     $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -46,9 +49,21 @@ if($result) {
     print ("Ошибка MySQL" . $error);
 }
 
+//все задачи одного пользователя
+
+$sql_tasks = "SELECT * FROM tasks WHERE user_id = 2";
+$result = mysqli_query($connect, $sql_tasks);
+
+if($result) {
+    $all_tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+} else {
+    $error = mysqli_error($connect);
+    print ("Ошибка MySQL" . $error);
+}
+
 include 'functions.php';
 
-$page_content = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'show_complete_tasks' => $show_complete_tasks]);
+$page_content = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'all_tasks' => $all_tasks, 'show_complete_tasks' => $show_complete_tasks, 'id_project' => $id]);
 $layout_content = include_template('layout.php', ['content' => $page_content, 'title' => "Дела в порядке", 'user_name' => $user_name]); 
 
 print($layout_content);

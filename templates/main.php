@@ -5,9 +5,9 @@
         <nav class="main-navigation">
             <ul class="main-navigation__list">
             <?php foreach ($projects as $project): ?>
-                <li class="main-navigation__list-item <?= ($project['id'] == 1) ? 'main-navigation__list-item--active':''?>">
-                    <a class="main-navigation__list-item-link" href="#"><?= $project['project_name'] ?></a>
-                    <span class="main-navigation__list-item-count"><?= count_task($tasks, $project['id'])?></span>
+                <li class="main-navigation__list-item <?= ($project['id'] == $_GET['id']) ? 'main-navigation__list-item--active':''?>">
+                    <a class="main-navigation__list-item-link" href="/?id=<?=$project['id']; ?>"><?= $project['project_name'] ?></a>
+                    <span class="main-navigation__list-item-count"><?= count_task($all_tasks, $project['id'])?></span>
                 </li>
             <?php endforeach; ?>
             </ul>
@@ -43,6 +43,8 @@
 
         <table class="tasks">
         <?php foreach ($tasks as $task):?>
+            <?php if (empty($tasks)) {http_response_code(404);} ?>
+            <?php var_dump(http_response_code());?>
             <?php if ($task['task_done'] === '1' && $show_complete_tasks === 0) {continue;} ?>
             <tr class="tasks__item task <?= ($task['task_done'] === '1') ? 'task--completed':''?> <?= ($task['task_done'] !== '1') && !empty($task['task_deadline']) && (date_overdue($task['task_deadline']) <= 24) ? 'task--important':''?>">
                 <td class="task__select">
@@ -51,7 +53,7 @@
                         <span class="checkbox__text"><?= htmlspecialchars($task['task_name']); ?></span>
                     </label>
                 </td>
-
+                <?php var_dump(http_response_code());?>
                 <td class="task__date">
                     <?= (!empty($task['task_deadline'])) ? strftime("%d.%m.%Y", strtotime($task['task_deadline'])):'' ?>
                 </td>
