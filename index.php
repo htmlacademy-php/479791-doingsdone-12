@@ -65,7 +65,7 @@ include 'functions.php';
 
 if(isset($tasks[0])) {
     $page_content = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'all_tasks' => $all_tasks, 'show_complete_tasks' => $show_complete_tasks]);
-    } else {$page_content = include_template('404.php',);
+    } else {$page_content = include_template('404.php',); http_response_code(404);
     };
 $layout_content = include_template('layout.php', ['content' => $page_content, 'title' => "Дела в порядке", 'user_name' => $user_name]); 
 
