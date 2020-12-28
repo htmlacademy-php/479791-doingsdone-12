@@ -61,9 +61,27 @@ if($result) {
     print ("Ошибка MySQL" . $error);
 }
 
+//все id проектов
+
+$sqlProjectsIds = "SELECT id FROM projects WHERE user_id = 2";
+$result = mysqli_query($connect, $sqlProjectsIds);
+
+if($result) {
+    $projectsIds = mysqli_fetch_all($result, MYSQLI_ASSOC);
+} else {
+    $error = mysqli_error($connect);
+    print ("Ошибка MySQL" . $error);
+}
+
+$idsArray = [];
+foreach ($projectsIds as $projectId):
+array_push($idsArray, $projectId['id']);
+endforeach;
+array_push($idsArray, null);
+
 include 'functions.php';
 
-if(isset($tasks[0])) {
+if(in_array($id, $idsArray)) {
     $pageContent = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'allTasks' => $allTasks, 'showCompleteTasks' => $showCompleteTasks]);
     } else {
             $pageContent = include_template('404.php',); 
