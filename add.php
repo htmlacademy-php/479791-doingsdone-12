@@ -1,11 +1,20 @@
 <?php
 include 'functions.php';
-include 'sql.php';
+$connect = connect();
+$userName = getUserName($connect);
+$projects = getProjects($connect);
+$allTasks = getTasks($connect);
+$projectsIds = getProjectsID($connect);
+$idsArray = [];
+foreach ($projectsIds as $projectId):
+array_push($idsArray, $projectId['id']);
+endforeach;
 
 $required_fields = ['name', 'project'];
 $errors = [];
 
 if (isset($_POST['submit'])) {
+  var_dump($_POST);
   foreach ($required_fields as $field) {
     if (empty($_POST[$field])) {
         $errors[$field] = 'Поле не заполнено';
@@ -20,12 +29,19 @@ if (isset($_POST['submit'])) {
     $errors[$date] = 'Вы ввели дату из прошлого';
   };
 
-  if (empty($errors)) {
-    header ('Location: index.php?success=true');
+  if (in_array($_POST['project'], $idsArray)) {} else {
+    $errors[$project] = 'Такого проекта не существует';
   }
+
+  if (empty($errors)) {
+    addTask($connect, {$_POST['project']}, 2, {$_POST['name']}, {$_POST['date']}, false);
+    exit;
+    header ('Location: index.php');
+  };
 }
 
-$layoutContent = include_template('addTask.php', ['errors' => $errors, 'projects' => $projects, 'tasks' => $tasks, 'allTasks' => $allTasks, 'userName' => $userName]); 
+$pageContent = include_template('addTask.php', ['errors' => $errors, 'projects' => $projects, 'allTasks' => $allTasks]); 
+$layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке", 'userName' => $userName]); 
 
 print($layoutContent);
 

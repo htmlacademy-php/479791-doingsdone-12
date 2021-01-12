@@ -44,4 +44,107 @@ function is_date_valid(string $date) : bool {
 function getPostVal($name) {
     return $_POST[$name] ?? "";
 };
+
+function connect() {
+$connect = mysqli_connect ('localhost', 'root', 'root', 'doingsdone');
+mysqli_set_charset($connect, "utf8");
+
+if (!$connect) {
+    $error = mysqli_connect_error();
+    print("Ошибка подключения к базе данных " . $error);
+} return $connect;
+};
+
+//узнаём имя юзера
+function getUserName($connect) {
+    $sqlUserName = "SELECT user_name FROM users WHERE id = 2";
+    $result = mysqli_query($connect, $sqlUserName);
+
+    if($result) {
+        $userName = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    } return $userName;
+};
+
+//добавляем проекты
+function getProjects($connect) {
+    $sqlProjects = "SELECT * FROM projects WHERE user_id = 2";
+    $result = mysqli_query($connect, $sqlProjects);
+
+    if($result) {
+        $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    } return $projects;
+};
+
+//все задачи одного пользователя
+function getTasks($connect) {
+    $sqlTasks = "SELECT * FROM tasks WHERE user_id = 2";
+    $result = mysqli_query($connect, $sqlTasks);
+
+    if($result) {
+        $allTasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    } return $allTasks;
+};
+
+//показываем задачи из проекта 
+
+function getProjectTasks($connect, $id, $allTasks) {
+
+    if ($id == '') {
+        $id = '1';
+    }
+
+    $sqlTasks = "SELECT * FROM tasks WHERE user_id = 2 AND project_id = $id";
+    $result = mysqli_query($connect, $sqlTasks);
+
+    if($result) {
+        $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        if ($id == '1') {
+            $tasks = $allTasks;
+        }
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    } return $tasks;
+};
+
+//все id проектов
+function getProjectsID($connect) {
+    $sqlProjectsIds = "SELECT id FROM projects WHERE user_id = 2";
+    $result = mysqli_query($connect, $sqlProjectsIds);
+
+    if($result) {
+        $projectsIds = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    } return $projectsIds;
+};
+
+//добавляем задачу
+function addTask($connect, $projectId, $userId, $taskName, $date, $taskDone) {
+
+    if (!$connect) {
+        $error = mysqli_connect_error();
+        print("Ошибка подключения к базе данных " . $error);
+    } 
+    $sqlAddTask = "INSERT INTO tasks VALUES ($projectId, $userId, $taskName, $date, $taskDone)";
+    $result = mysqli_query($connect, $sqlUserName);
+
+    if($result) {
+        $userName = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    }
+};
+
 ?>
