@@ -33,21 +33,25 @@ if (isset($_POST['submit'])) {
     $errors['project'] = 'Такого проекта не существует';
   };
 
-  if (isset($_FILES['file'])) {
-    $file_name = $_FILES['file']['name'];
-    $file_path = __DIR__ . '/uploads/';
-    $file_url = '/uploads/' . $file_name;
-    
-    move_uploaded_file($_FILES['file']['tmp_name'], $file_path . $file_name);
-}
+  if (!empty($_FILES['file'])) {
+  $fileName = $_FILES['file']['name'];
+  $filePath = __DIR__ . '/';
+  $fileUrl = '/' . $fileName;
+  
+  move_uploaded_file($_FILES['file']['tmp_name'], $filePath . $fileName);
+  } else {
+    $fileUrl = '';
+  };
 
+  $file = $fileUrl;
+    
   if (empty($errors)) {
-    addTask($connect, $_POST['project'], 2, $_POST['name'], $_POST['date'], false, $file_url);
-    exit;
+    addTask($connect, $_POST['project'], 2, $_POST['name'], $_POST['date'], $file);
     header ('Location: index.php');
+    exit;
   };
 }
-
+var_dump($fileUrl);
 $pageContent = include_template('addTask.php', ['errors' => $errors, 'projects' => $projects, 'allTasks' => $allTasks]); 
 $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке", 'userName' => $userName]); 
 

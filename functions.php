@@ -141,17 +141,17 @@ function getProjectsID($connect, $userId) {
 };
 
 //добавляем задачу
-function addTask($connect, $projectId, $userId, $taskName, $date, $taskDone) {
+function addTask($connect, $projectId, $userId, $taskName, $date, $fileUrl) {
 
     if (!$connect) {
         $error = mysqli_connect_error();
         print("Ошибка подключения к базе данных " . $error);
     } 
-    $sqlAddTask = "INSERT INTO tasks VALUES ($projectId, $userId, NULL, $taskName, $date, $taskDone)";
+    $sqlAddTask = "INSERT INTO tasks (project_id, user_id, task_name, task_deadline, file) VALUES ($projectId, $userId, '$taskName', '$date', '$fileUrl')";
     $result = mysqli_query($connect, $sqlAddTask);
 
     if($result) {
-        $newTask = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        
     } else {
         $error = mysqli_error($connect);
         print ("Ошибка MySQL" . $error);
