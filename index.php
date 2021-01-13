@@ -4,14 +4,14 @@ $showCompleteTasks = rand(0, 1);
 include 'functions.php';
 
 $connect = connect();
-$userName = getUserName($connect);
-$projects = getProjects($connect);
-$allTasks = getTasks($connect);
+$userName = getUserName($connect, 2);
+$projects = getProjects($connect, 2);
+$allTasks = getTasks($connect, 2);
 
 $id = $_GET['id'] ?? '';
-$tasks = getProjectTasks($connect, $id, $allTasks);
+$tasks = getProjectTasks($connect, $id, $allTasks, 2);
 
-$projectsIds = getProjectsID($connect);
+$projectsIds = getProjectsID($connect, 2);
 
 $idsArray = [];
 foreach ($projectsIds as $projectId):
