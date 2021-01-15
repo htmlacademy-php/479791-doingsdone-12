@@ -42,11 +42,9 @@ if (isset($_POST['submit'])) {
   } else {
     $fileUrl = '';
   };
-
-  $file = $fileUrl;
     
   if (empty($errors)) {
-    addTask($connect, $_POST['project'], 2, $_POST['name'], $_POST['date'], $file);
+    addTask($connect, $_POST['project'], 2, $_POST['name'], $_POST['date'], $fileUrl);
     header ('Location: index.php');
     exit;
   };

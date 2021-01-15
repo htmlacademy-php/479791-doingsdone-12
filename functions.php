@@ -89,7 +89,7 @@ function getProjects($connect, $userId) {
 //все задачи одного пользователя
 function getTasks($connect, $userId) {
     $allTasks;
-    $sqlTasks = "SELECT * FROM tasks WHERE user_id = $userId";
+    $sqlTasks = "SELECT * FROM tasks WHERE user_id = $userId ORDER BY id DESC";
     $result = mysqli_query($connect, $sqlTasks);
 
     if($result) {
@@ -110,7 +110,7 @@ function getProjectTasks($connect, $id, $allTasks, $userId) {
         $id = '1';
     }
 
-    $sqlTasks = "SELECT * FROM tasks WHERE user_id = $userId AND project_id = $id";
+    $sqlTasks = "SELECT * FROM tasks WHERE user_id = $userId AND project_id = $id ORDER BY id DESC";
     $result = mysqli_query($connect, $sqlTasks);
 
     if($result) {
