@@ -25,10 +25,10 @@ if (isset($_POST['submit'])) {
     $errors['date'] = 'Неверный формат даты';
   };
 
-  if (strtotime($_POST['date']) < strtotime(date("m.d.y"))) {
+  if (strtotime($_POST['date']) + 86400 < time()) {
     $errors['date'] = 'Введите корректную дату';
   };
-
+  
   if (in_array($_POST['project'], $idsArray)) {} else {
     $errors['project'] = 'Такого проекта не существует';
   };

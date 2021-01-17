@@ -150,9 +150,7 @@ function addTask($connect, $projectId, $userId, $taskName, $date, $fileUrl) {
     $sqlAddTask = "INSERT INTO tasks (project_id, user_id, task_name, task_deadline, file) VALUES ($projectId, $userId, '$taskName', '$date', '$fileUrl')";
     $result = mysqli_query($connect, $sqlAddTask);
 
-    if($result) {
-        
-    } else {
+    if(!$result) {
         $error = mysqli_error($connect);
         print ("Ошибка MySQL" . $error);
     }
