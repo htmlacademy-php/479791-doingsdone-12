@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
     $errors['project'] = 'Такого проекта не существует';
   };
 
-  if (!empty($_FILES['file'])) {
+  if(is_uploaded_file($_FILES['file']['tmp_name'])) {
   $fileName = $_FILES['file']['name'];
   $filePath = __DIR__ . '/';
   $fileUrl = '/' . $fileName;
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
     exit;
   };
 }
-var_dump($fileUrl);
+
 $pageContent = include_template('addTask.php', ['errors' => $errors, 'projects' => $projects, 'allTasks' => $allTasks]); 
 $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке", 'userName' => $userName]); 
 
