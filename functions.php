@@ -59,17 +59,16 @@ return $connect;
 //узнаём имя юзера
 function getUserName($connect, $userId) {
     $userName = '';
-    $userInfo = [];
-    $sqlUserName = "SELECT user_name FROM users WHERE id = $userId";
-    $result = mysqli_query($connect, $sqlUserName);
+    $sqlUserInfo = "SELECT user_name FROM users WHERE id = $userId";
+    $result = mysqli_query($connect, $sqlUserInfo);
 
     if($result) {
         $userInfo = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $userName = $userInfo[0]['user_name'];
     } else {
         $error = mysqli_error($connect);
         print ("Ошибка MySQL" . $error);
     } 
-    $userName = $userInfo[0]['user_name'];
     return $userName;
 };
 
