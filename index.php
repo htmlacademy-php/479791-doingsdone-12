@@ -10,7 +10,7 @@ $allTasks = getTasks($connect, 2);
 
 $id = $_GET['id'] ?? '';
 
-if ($id == '1') {
+if ($id == '1' || $id == '') {
     $tasks = $allTasks;
 } else {
     $tasks = getProjectTasks($connect, $id, $allTasks, 2);

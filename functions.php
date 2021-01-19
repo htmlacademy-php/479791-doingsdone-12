@@ -58,7 +58,6 @@ return $connect;
 
 //узнаём имя юзера
 function getUserName($connect, $userId) {
-
     $userName = '';
     $sqlUserInfo = "SELECT user_name FROM users WHERE id = $userId";
     $result = mysqli_query($connect, $sqlUserInfo);
@@ -108,18 +107,12 @@ function getTasks($connect, $userId) {
 function getProjectTasks($connect, $id, $allTasks, $userId) {
     $tasks = [];
 
-    if ($id == '') {
-        $id = '1';
-    }
-
     $sqlTasks = "SELECT * FROM tasks WHERE user_id = $userId AND project_id = $id ORDER BY id DESC";
     $result = mysqli_query($connect, $sqlTasks);
 
     if($result) {
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        if ($id == '1') {
-            $tasks = $allTasks;
-        }
+      
     } else {
         $error = mysqli_error($connect);
         print ("Ошибка MySQL" . $error);
