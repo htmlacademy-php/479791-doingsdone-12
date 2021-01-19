@@ -58,6 +58,7 @@ return $connect;
 
 //узнаём имя юзера
 function getUserName($connect, $userId) {
+
     $userName = '';
     $sqlUserInfo = "SELECT user_name FROM users WHERE id = $userId";
     $result = mysqli_query($connect, $sqlUserInfo);

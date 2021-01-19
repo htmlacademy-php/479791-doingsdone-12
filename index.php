@@ -9,7 +9,12 @@ $projects = getProjects($connect, 2);
 $allTasks = getTasks($connect, 2);
 
 $id = $_GET['id'] ?? '';
-$tasks = getProjectTasks($connect, $id, $allTasks, 2);
+
+if ($id == '1') {
+    $tasks = $allTasks;
+} else {
+    $tasks = getProjectTasks($connect, $id, $allTasks, 2);
+};
 
 $projectsIds = getProjectsID($connect, 2);
 
