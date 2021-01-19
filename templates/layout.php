@@ -24,7 +24,7 @@
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
-                        <p><?= $userName[0]['user_name']; ?></p>
+                        <p><?= $userName; ?></p>
 
                         <a href="#">Выйти</a>
                     </div>

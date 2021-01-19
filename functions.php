@@ -58,16 +58,18 @@ return $connect;
 
 //узнаём имя юзера
 function getUserName($connect, $userId) {
-    $userName = [];
+    $userName = '';
+    $userInfo = [];
     $sqlUserName = "SELECT user_name FROM users WHERE id = $userId";
     $result = mysqli_query($connect, $sqlUserName);
 
     if($result) {
-        $userName = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $userInfo = mysqli_fetch_all($result, MYSQLI_ASSOC);
     } else {
         $error = mysqli_error($connect);
         print ("Ошибка MySQL" . $error);
     } 
+    $userName = $userInfo[0]['user_name'];
     return $userName;
 };
 
