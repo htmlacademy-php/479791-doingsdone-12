@@ -51,6 +51,13 @@
                         <span class="checkbox__text"><?= htmlspecialchars($task['task_name']); ?></span>
                     </label>
                 </td>
+                <td>
+                    <?php if (!empty($task['file'])):?>
+                    <a href="<?=$task['file']?>">
+                        <img src="img\download-link.png" alt="Файл задачи">
+                    </a>
+                    <?php endif; ?>
+                </td>
                 <td class="task__date">
                     <?= (!empty($task['task_deadline'])) ? strftime("%d.%m.%Y", strtotime($task['task_deadline'])):'' ?>
                 </td>

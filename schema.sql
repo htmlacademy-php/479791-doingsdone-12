@@ -21,7 +21,8 @@ CREATE TABLE tasks (
     project_id INT NOT NULL,
     user_id INT NOT NULL,
     id INT AUTO_INCREMENT PRIMARY KEY,
-    task_name VARCHAR(32) NOT NULL UNIQUE,
+    task_name VARCHAR(256) NOT NULL UNIQUE,
     task_deadline DATETIME,
-    task_done tinyint(1) default NULL
+    task_done tinyint(1) default 0,
+    file varchar(256)
 );
