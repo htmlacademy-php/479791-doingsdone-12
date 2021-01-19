@@ -58,7 +58,7 @@ return $connect;
 
 //узнаём имя юзера
 function getUserName($connect, $userId) {
-    $userName;
+    $userName = [];
     $sqlUserName = "SELECT user_name FROM users WHERE id = $userId";
     $result = mysqli_query($connect, $sqlUserName);
 
@@ -73,7 +73,7 @@ function getUserName($connect, $userId) {
 
 //добавляем проекты
 function getProjects($connect, $userId) {
-    $projects;
+    $projects = [];
     $sqlProjects = "SELECT * FROM projects WHERE user_id = $userId";
     $result = mysqli_query($connect, $sqlProjects);
 
@@ -88,7 +88,7 @@ function getProjects($connect, $userId) {
 
 //все задачи одного пользователя
 function getTasks($connect, $userId) {
-    $allTasks;
+    $allTasks = [];
     $sqlTasks = "SELECT * FROM tasks WHERE user_id = $userId ORDER BY id DESC";
     $result = mysqli_query($connect, $sqlTasks);
 
@@ -104,7 +104,7 @@ function getTasks($connect, $userId) {
 //показываем задачи из проекта 
 
 function getProjectTasks($connect, $id, $allTasks, $userId) {
-    $tasks;
+    $tasks = [];
 
     if ($id == '') {
         $id = '1';
@@ -127,7 +127,7 @@ function getProjectTasks($connect, $id, $allTasks, $userId) {
 
 //все id проектов
 function getProjectsID($connect, $userId) {
-    $projectsIds;
+    $projectsIds = [];
     $sqlProjectsIds = "SELECT id FROM projects WHERE user_id = $userId";
     $result = mysqli_query($connect, $sqlProjectsIds);
 
