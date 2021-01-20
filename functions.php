@@ -72,6 +72,21 @@ function getUserName($connect, $userId) {
     return $userName;
 };
 
+//узнаём данные юзеров
+function getUsersInfo($connect) {
+    $usersInfo = [];
+    $sqlUsersInfo = "SELECT * FROM users";
+    $result = mysqli_query($connect, $sqlUsersInfo);
+
+    if($result) {
+        $usersInfo = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    } 
+    return $usersInfo;
+};
+
 //добавляем проекты
 function getProjects($connect, $userId) {
     $projects = [];
@@ -151,4 +166,20 @@ function addTask($connect, $projectId, $userId, $taskName, $date, $fileUrl) {
     }
 };
 
+//добавляем пользователя
+
+function addUser($connect, $name, $email, $password) {
+
+    if (!$connect) {
+        $error = mysqli_connect_error();
+        print("Ошибка подключения к базе данных " . $error);
+    } 
+    $sqlAddUser = "INSERT INTO users (user_name, e_mail, user_password) VALUES ('$name', '$email', '$password')";
+    $result = mysqli_query($connect, $sqlAddUser);
+
+    if(!$result) {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    }
+};
 ?>
