@@ -8,7 +8,6 @@ $userName = getUserName($connect, 2);
 $projects = getProjects($connect, 2);
 $allTasks = getTasks($connect, 2);
 
-$id = $_GET['id'] ?? '';
 $safeId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 if ($safeId == '1' || $safeId == '') {
@@ -25,7 +24,7 @@ array_push($idsArray, $projectId['id']);
 endforeach;
 array_push($idsArray, null);
 
-if(in_array($safeId, $idsArray)) {
+if(in_array($id, $idsArray)) {
     $pageContent = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'allTasks' => $allTasks, 'showCompleteTasks' => $showCompleteTasks]);
     } else {
             $pageContent = include_template('404.php',); 

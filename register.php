@@ -11,23 +11,25 @@ if (isset($_POST['submit'])) {
   foreach ($required_fields as $field) {
     if (empty($_POST[$field])) {
         $errors[$field] = 'Поле не заполнено';
-    }
+    };
   };
   
   if (!empty($_POST['email'])) {
     if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) == false) {
       $errors['email'] = 'Введите корректный Email';
     };
+
+    foreach ($users as $user) {
+      if ($user['e_mail'] == $_POST['email']) {
+          $errors['email'] = 'Пользователь с этим Email уже зарегестрирован';
+        };
+    };
   };
 
-  if (!empty($_POST['password'])) {
-    $hashPassword = password_hash($_POST['password'] ,PASSWORD_DEFAULT);
   
-    foreach ($users as $user) {
-      if ($user['user_password'] == $hashPassword) {
-          $errors['password'] = 'Пароль уже используется';
-      }
-    };
+
+  if (!empty($_POST['password'])) {
+    $hashPassword = password_hash($_POST['password'] ,PASSWORD_DEFAULT);    
   };
 
   if (empty($errors)) {
