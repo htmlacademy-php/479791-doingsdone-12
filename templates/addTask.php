@@ -23,14 +23,14 @@
       <div class="form__row">
         <label class="form__label" for="name">Название <sup>*</sup></label>
         
-        <input class="form__input <?php isset($errors['name']) ? print 'form__input--error' : print ''; ?>" type="text" name="name" id="name" value="<?= isset($_POST['name']) ? ($_POST['name']) : ''; ?>" placeholder="Введите название">
+        <input class="form__input <?php if(isset($errors['name'])): ?>'form__input--error'<?php endif;?>" type="text" name="name" id="name" value="<?= isset($_POST['name']) ? ($_POST['name']) : ''; ?>" placeholder="Введите название">
         <p class="form__message"><?=$errors['name'] ?></p>
       </div>
 
       <div class="form__row">
         <label class="form__label" for="project">Проект <sup>*</sup></label>
 
-        <select class="form__input form__input--select <?php isset($errors['project']) ? print 'form__input--error' : print ''; ?>" name="project" id="project">
+        <select class="form__input form__input--select <?php if(isset($errors['project'])): ?>'form__input--error'<?php endif;?>" name="project" id="project">
         <?php foreach ($projects as $project): ?>
           <?php if ($project['id'] == '1') {continue;} ?>
           <option value="<?= $project['id'] ?>"><?= $project['project_name'] ?></option>
@@ -42,7 +42,7 @@
       <div class="form__row">
         <label class="form__label" for="date">Дата выполнения</label>
 
-        <input class="form__input form__input--date <?php isset($errors['date']) ? print 'form__input--error' : print ''; ?>" type="text" name="date" id="date" value="<?= isset($_POST['date']) ? ($_POST['date']) : ''; ?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+        <input class="form__input form__input--date <?php if(isset($errors['date'])): ?>'form__input--error'<?php endif;?>" type="text" name="date" id="date" value="<?= isset($_POST['date']) ? ($_POST['date']) : ''; ?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
         <p class="form__message"><?=$errors['date'] ?></p>
       </div>
 

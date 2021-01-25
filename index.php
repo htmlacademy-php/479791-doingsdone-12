@@ -8,12 +8,12 @@ $userName = getUserName($connect, 2);
 $projects = getProjects($connect, 2);
 $allTasks = getTasks($connect, 2);
 
-$id = $_GET['id'] ?? '';
+$safeId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
-if ($id == '1' || $id == '') {
+if ($safeId == '1' || $safeId == '') {
     $tasks = $allTasks;
 } else {
-    $tasks = getProjectTasks($connect, $id, $allTasks, 2);
+    $tasks = getProjectTasks($connect, $safeId, $allTasks, 2);
 };
 
 $projectsIds = getProjectsID($connect, 2);
