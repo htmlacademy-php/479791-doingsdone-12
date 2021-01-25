@@ -19,7 +19,7 @@
       <div class="form__row">
         <label class="form__label" for="password">Пароль <sup>*</sup></label>
 
-        <input class="form__input <?php if(isset($errors['password'])): ?>'form__input--error'<?php endif;?>" placeholder="Введите пароль">
+        <input class="form__input <?php if(isset($errors['password'])): ?>'form__input--error'<?php endif;?>" value="<?= isset($_POST['password']) ? ($_POST['password']) : ''; ?>" name="password" id="password" placeholder="Введите пароль">
         <p class="form__message"><?=$errors['password'] ?></p>
       </div>
 

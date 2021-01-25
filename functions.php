@@ -178,8 +178,7 @@ function addUser($connect, $name, $email, $password) {
     } 
     $safeName = mysqli_real_escape_string($connect,$name);
     $safeEmail = mysqli_real_escape_string($connect,$email);
-    $safePassword = mysqli_real_escape_string($connect,$password);
-    $sqlAddUser = "INSERT INTO users (user_name, e_mail, user_password) VALUES ('$safeName', '$safeEmail', '$safePassword')";
+    $sqlAddUser = "INSERT INTO users (user_name, e_mail, user_password) VALUES ('$safeName', '$safeEmail', '$password')";
     $result = mysqli_query($connect, $sqlAddUser);
 
     if(!$result) {
