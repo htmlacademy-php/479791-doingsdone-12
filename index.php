@@ -7,7 +7,7 @@ $connect = connect();
 $userName = getUserName($connect, 2);
 $projects = getProjects($connect, 2);
 $allTasks = getTasks($connect, 2);
-
+var_dump($_SESSION);
 $safeId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 if ($safeId == '1' || $safeId == '') {
