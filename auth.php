@@ -33,16 +33,6 @@ if (isset($_POST['submit'])) {
         };
     };
   };
-
-  if (!empty($_POST['password'])) {
-    $hashPassword = password_hash($_POST['password'] ,PASSWORD_DEFAULT);    
-  };
-  
-  if (empty($errors)) {
-    addUser($connect, $_POST['name'], $_POST['email'], $hashPassword);
-    header ('Location: index.php');
-    exit;
-  };
 };
 
 $pageContent = include_template('authForm.php', ['errors' => $errors]); 
