@@ -3,20 +3,22 @@
 $showCompleteTasks = rand(0, 1);
 include 'functions.php';
 
+session_start();
+$userID = $_SESSION['id'];
+$userName = $_SESSION['user'];
+
 $connect = connect();
-$userName = getUserName($connect, 2);
-$projects = getProjects($connect, 2);
-$allTasks = getTasks($connect, 2);
-var_dump($_SESSION);
+$projects = getProjects($connect, $userID);
+$allTasks = getTasks($connect, $userID);
 $safeId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 if ($safeId == '1' || $safeId == '') {
     $tasks = $allTasks;
 } else {
-    $tasks = getProjectTasks($connect, $safeId, $allTasks, 2);
+    $tasks = getProjectTasks($connect, $safeId, $allTasks, $userID);
 };
 
-$projectsIds = getProjectsID($connect, 2);
+$projectsIds = getProjectsID($connect, $userID);
 
 $idsArray = [];
 foreach ($projectsIds as $projectId):

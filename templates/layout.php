@@ -20,18 +20,18 @@
             </a>
 
            <div class="main-header__side">
+           <?php session_start() ?>
             <?php if (isset($_SESSION['id'])): ?>
                 <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
-                                
-                        <a href="#">Выйти</a>
+                        <p><?=$userName?></p>       
+                        <a href="/logout.php">Выйти</a>
                     </div>
                 </div>
             <?php else: ?>
                 <a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>
-                <a class="main-header__side-item button button--transparent" href="register.php">Регистрация</a>
             <?php endif; ?>
             </div>
         </header>
