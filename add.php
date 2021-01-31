@@ -1,10 +1,17 @@
 <?php
 include 'functions.php';
+session_start();
+if (!isset($_SESSION['id'])) {
+  header ('Location: index.php');
+  exit;
+};
+$userID = $_SESSION['id'];
+$userName = $_SESSION['user'];
+
 $connect = connect();
-$userName = getUserName($connect, 2);
-$projects = getProjects($connect, 2);
-$allTasks = getTasks($connect, 2);
-$projectsIds = getProjectsID($connect, 2);
+$projects = getProjects($connect, $userID);
+$allTasks = getTasks($connect, $userID);
+$projectsIds = getProjectsID($connect, $userID);
 $idsArray = [];
 foreach ($projectsIds as $projectId):
 array_push($idsArray, $projectId['id']);
@@ -44,7 +51,7 @@ if (isset($_POST['submit'])) {
   };
     
   if (empty($errors)) {
-    addTask($connect, $_POST['project'], 2, $_POST['name'], $_POST['date'], $fileUrl);
+    addTask($connect, $_POST['project'], $userID, $_POST['name'], $_POST['date'], $fileUrl);
     header ('Location: index.php');
     exit;
   };
