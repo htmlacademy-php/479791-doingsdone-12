@@ -34,10 +34,10 @@ if (isset($_SESSION['id'])) {
             http_response_code(404);
             };
     $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке", 'userName' => $userName]); 
-    } else {
-        $pageContent = include_template('guest.php');
-        $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке"]); 
-    };
+} else {
+    $pageContent = include_template('guest.php');
+    $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке"]); 
+};
 
 print($layoutContent);
 ?>
