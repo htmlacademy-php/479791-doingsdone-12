@@ -2,7 +2,7 @@
 // показывать или нет выполненные задачи
 $showCompleteTasks = rand(0, 1);
 include 'functions.php';
-
+$userName = NULL;
 session_start();
 if (isset($_SESSION['id'])) {
     $userID = $_SESSION['id'];
@@ -29,15 +29,15 @@ if (isset($_SESSION['id'])) {
 
     if(in_array($id, $idsArray)) {
         $pageContent = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'allTasks' => $allTasks, 'showCompleteTasks' => $showCompleteTasks]);
-    } else {
+        } else {
             $pageContent = include_template('404.php',); 
             http_response_code(404);
             };
-    $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке", 'userName' => $userName]); 
 } else {
     $pageContent = include_template('guest.php');
-    $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке"]); 
 };
+
+$layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке", 'userName' => $userName]);
 
 print($layoutContent);
 ?>
