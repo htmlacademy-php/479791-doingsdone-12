@@ -26,3 +26,7 @@ CREATE TABLE tasks (
     task_done tinyint(1) default 0,
     file varchar(256)
 );
+
+//создаём полнотекстовый индекс для поля название задачи
+
+CREATE FULLTEXT INDEX task_search ON tasks (task_name)

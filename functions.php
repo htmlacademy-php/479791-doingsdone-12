@@ -186,4 +186,22 @@ function addUser($connect, $name, $email, $password) {
         print ("Ошибка MySQL" . $error);
     }
 };
+
+//ищем задачи по поиску
+
+function getSearchTasks($connect, $searchWord, $userId){
+    $tasks = [];
+
+    $sqlTasks = "SELECT * FROM tasks WHERE MATCH(task_name) AGAINST('$searchWord') AND user_id = $userId";
+    $result = mysqli_query($connect, $sqlTasks);
+
+    if($result) {
+        $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    } 
+    return $tasks;
+};
 ?>
