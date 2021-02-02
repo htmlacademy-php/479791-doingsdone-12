@@ -42,7 +42,7 @@
         </div>
 
         <table class="tasks">
-        <?php if($noTasksFound == true): ?>По вашему запросу ничего не найдено<?php endif;?>
+        <?php if(empty($tasks)): ?>По вашему запросу ничего не найдено<?php endif;?>
         <?php foreach ($tasks as $task):?>
             <?php if ($task['task_done'] === '1' && $showCompleteTasks === 0) {continue;} ?>
             <tr class="tasks__item task <?= ($task['task_done'] === '1') ? 'task--completed':''?> <?= ($task['task_done'] !== '1') && !empty($task['task_deadline']) && (date_overdue($task['task_deadline']) <= 24) ? 'task--important':''?>">

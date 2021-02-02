@@ -3,7 +3,6 @@
 $showCompleteTasks = rand(0, 1);
 include 'functions.php';
 $userName = NULL;
-$notTasksFound = false;
 session_start();
 if (isset($_SESSION['id'])) {
     $userID = $_SESSION['id'];
@@ -14,9 +13,6 @@ if (isset($_SESSION['id'])) {
     $allTasks = getTasks($connect, $userID);
     if (isset($_GET['submitSearch'])) {
         $tasks = getSearchTasks($connect, $_GET['searchTasks'], $userID);
-        if (empty($tasks)) {
-            $notTasksFound = true;
-        };
     } else {
         $safeId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
         if ($safeId == '1' || $safeId == '') {

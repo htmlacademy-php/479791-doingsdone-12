@@ -192,7 +192,8 @@ function addUser($connect, $name, $email, $password) {
 function getSearchTasks($connect, $searchWord, $userId){
     $tasks = [];
 
-    $sqlTasks = "SELECT * FROM tasks WHERE MATCH(task_name) AGAINST('$searchWord') AND user_id = $userId";
+    $safeSearchWord = mysqli_real_escape_string($connect,$searchWord);
+    $sqlTasks = "SELECT * FROM tasks WHERE MATCH(task_name) AGAINST('$safeSearchWord') AND user_id = $userId";
     $result = mysqli_query($connect, $sqlTasks);
 
     if($result) {
