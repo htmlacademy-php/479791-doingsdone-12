@@ -29,4 +29,4 @@ CREATE TABLE tasks (
 
 //создаём полнотекстовый индекс для поля название задачи
 
-CREATE FULLTEXT INDEX task_search ON tasks (task_name)
+CREATE FULLTEXT INDEX task_search ON tasks (task_name);

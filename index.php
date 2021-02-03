@@ -31,7 +31,7 @@ if (isset($_SESSION['id'])) {
     array_push($idsArray, null);
 
     if(in_array($id, $idsArray)) {
-        $pageContent = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'allTasks' => $allTasks, 'showCompleteTasks' => $showCompleteTasks, 'noTasksFound' => $notTasksFound]);
+        $pageContent = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'allTasks' => $allTasks, 'showCompleteTasks' => $showCompleteTasks]);
         } else {
             $pageContent = include_template('404.php',); 
             http_response_code(404);
