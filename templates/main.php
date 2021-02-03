@@ -14,16 +14,16 @@
         </nav>
 
         <a class="button button--transparent button--plus content__side-button"
-            href="pages/form-project.html" target="project_add">Добавить проект</a>
+            href="/addProject.php" target="project_add">Добавить проект</a>
     </section>
 
     <main class="content__main">
         <h2 class="content__main-heading">Список задач</h2>
 
-        <form class="search-form" action="index.php" method="post" autocomplete="off">
-            <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+        <form class="search-form" action="/" method="get" autocomplete="off">
+            <input class="search-form__input" type="text" name="searchTasks" value="" placeholder="Поиск по задачам">
 
-            <input class="search-form__submit" type="submit" name="" value="Искать">
+            <input class="search-form__submit" type="submit" name="submitSearch" value="Искать">
         </form>
 
         <div class="tasks-controls">
@@ -42,6 +42,7 @@
         </div>
 
         <table class="tasks">
+        <?php if(empty($tasks)): ?>По вашему запросу ничего не найдено<?php endif;?>
         <?php foreach ($tasks as $task):?>
             <?php if ($task['task_done'] === '1' && $showCompleteTasks === 0) {continue;} ?>
             <tr class="tasks__item task <?= ($task['task_done'] === '1') ? 'task--completed':''?> <?= ($task['task_done'] !== '1') && !empty($task['task_deadline']) && (date_overdue($task['task_deadline']) <= 24) ? 'task--important':''?>">

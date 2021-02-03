@@ -7,16 +7,19 @@ session_start();
 if (isset($_SESSION['id'])) {
     $userID = $_SESSION['id'];
     $userName = $_SESSION['user'];
-
+    
     $connect = connect();
     $projects = getProjects($connect, $userID);
     $allTasks = getTasks($connect, $userID);
-    $safeId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
-    if ($safeId == '1' || $safeId == '') {
-        $tasks = $allTasks;
+    if (isset($_GET['submitSearch'])) {
+        $tasks = getSearchTasks($connect, $_GET['searchTasks'], $userID);
     } else {
-        $tasks = getProjectTasks($connect, $safeId, $allTasks, $userID);
+        $safeId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+        if ($safeId == '1' || $safeId == '') {
+            $tasks = $allTasks;
+        } else {
+            $tasks = getProjectTasks($connect, $safeId, $allTasks, $userID);
+        };
     };
 
     $projectsIds = getProjectsID($connect, $userID);

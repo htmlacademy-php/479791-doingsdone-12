@@ -6,7 +6,7 @@ USE doingsdone;
 
 CREATE TABLE projects (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    project_name VARCHAR(128) NOT NULL UNIQUE,
+    project_name VARCHAR(128) NOT NULL,
     user_id INT NOT NULL
 );
 
@@ -26,3 +26,7 @@ CREATE TABLE tasks (
     task_done tinyint(1) default 0,
     file varchar(256)
 );
+
+//создаём полнотекстовый индекс для поля название задачи
+
+CREATE FULLTEXT INDEX task_search ON tasks (task_name);

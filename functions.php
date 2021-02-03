@@ -186,4 +186,42 @@ function addUser($connect, $name, $email, $password) {
         print ("Ошибка MySQL" . $error);
     }
 };
+
+//ищем задачи по поиску
+
+function getSearchTasks($connect, $searchWord, $userId){
+    $tasks = [];
+
+    $safeSearchWord = mysqli_real_escape_string($connect,$searchWord);
+    $sqlTasks = "SELECT * FROM tasks WHERE MATCH(task_name) AGAINST('$safeSearchWord') AND user_id = $userId";
+    $result = mysqli_query($connect, $sqlTasks);
+
+    if($result) {
+        $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    } 
+    return $tasks;
+};
+
+//добавляем проект
+
+function addProject($connect, $userId, $projectName) {
+
+    if (!$connect) {
+        $error = mysqli_connect_error();
+        print("Ошибка подключения к базе данных " . $error);
+    } 
+    $safeProjectName = mysqli_real_escape_string($connect,$projectName);
+    $sqlAddProject = "INSERT INTO projects (project_name, user_id) VALUES ('$safeProjectName', $userId)";
+    $result = mysqli_query($connect, $sqlAddProject);
+
+    if(!$result) {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    }
+};
+
 ?>
