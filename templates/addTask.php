@@ -13,13 +13,13 @@
       </ul>
     </nav>
 
-    <a class="button button--transparent button--plus content__side-button" href="form-project.html">Добавить проект</a>
+    <a class="button button--transparent button--plus content__side-button" href="/addProject.php">Добавить проект</a>
   </section>
 
   <main class="content__main">
     <h2 class="content__main-heading">Добавление задачи</h2>
 
-    <form class="form"  action="/add.php" method="post" autocomplete="off" enctype="multipart/form-data">
+    <form class="form"  action="/addTask.php" method="post" autocomplete="off" enctype="multipart/form-data">
       <div class="form__row">
         <label class="form__label" for="name">Название <sup>*</sup></label>
         

@@ -205,4 +205,23 @@ function getSearchTasks($connect, $searchWord, $userId){
     } 
     return $tasks;
 };
+
+//добавляем проект
+
+function addProject($connect, $userId, $projectName) {
+
+    if (!$connect) {
+        $error = mysqli_connect_error();
+        print("Ошибка подключения к базе данных " . $error);
+    } 
+    $safeProjectName = mysqli_real_escape_string($connect,$projectName);
+    $sqlAddProject = "INSERT INTO projects (project_name, user_id) VALUES ('$safeProjectName', $userId)";
+    $result = mysqli_query($connect, $sqlAddProject);
+
+    if(!$result) {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    }
+};
+
 ?>
