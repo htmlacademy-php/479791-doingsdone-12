@@ -15,12 +15,16 @@ if (isset($_SESSION['id'])) {
         $tasks = getSearchTasks($connect, $_GET['searchTasks'], $userID);
     } else {
         $safeId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-        if ($safeId == '1' || $safeId == '') {
+        if ($safeId == '') {
             $tasks = $allTasks;
         } else {
             $tasks = getProjectTasks($connect, $safeId, $allTasks, $userID);
         };
     };
+    var_dump($_GET['filter']);
+    var_dump($_GET['id']);
+    var_dump($safeId);
+    $tasks = filterTasks($tasks, $_GET['filter']);
 
     $projectsIds = getProjectsID($connect, $userID);
 
@@ -31,7 +35,7 @@ if (isset($_SESSION['id'])) {
     array_push($idsArray, null);
 
     if(in_array($id, $idsArray)) {
-        $pageContent = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'allTasks' => $allTasks, 'showCompleteTasks' => $showCompleteTasks]);
+        $pageContent = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'allTasks' => $allTasks, 'showCompleteTasks' => $showCompleteTasks, 'safeId' => $safeId]);
         } else {
             $pageContent = include_template('404.php',); 
             http_response_code(404);

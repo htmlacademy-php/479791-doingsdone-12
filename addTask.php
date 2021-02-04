@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
     $errors['date'] = 'Неверный формат даты';
   };
 
-  if (strtotime($_POST['date']) + 86400 < time()) {
+  if (strtotime($_POST['date']) + $oneDay < time()) {
     $errors['date'] = 'Введите корректную дату';
   };
   

@@ -224,4 +224,59 @@ function addProject($connect, $userId, $projectName) {
     }
 };
 
+//фильтрация задач
+$oneDay = 86400;
+
+function filterToday($tasks) {
+    $filterTasks = [];
+    foreach ($tasks as $task):
+        if($task['task_deadline'] == time()) {
+            array_push($filterTasks, $task);
+        };
+    endforeach;
+    return $filterTasks;
+};
+
+function filterTommorow($tasks) {
+    $filterTasks = [];
+    foreach ($tasks as $task):
+        if(strtotime($task['task_deadline']) == time() + $oneDay) {
+            array_push($filterTasks, $task);
+        };
+    endforeach;
+    return $filterTasks;
+};
+
+function filterExpired($tasks) {
+    $filterTasks = [];
+    foreach ($tasks as $task):
+        if(strtotime($task['task_deadline']) < time()) {
+            array_push($filterTasks, $task);
+        };
+    endforeach;
+    return $filterTasks;
+};
+
+function filterTasks($tasks, $filter){
+    $filterTasks = [];
+
+    if ($filter == 'today') {
+        $filterTasks = filterToday($tasks);
+        var_dump($filterTasks);
+    };
+
+    if ($filter == 'tommorow') {
+        $filterTasks = filterTommorow($tasks);
+    };
+
+    if ($filter == 'expired') {
+        $filterTasks = filterExpired($tasks);
+    };
+
+    if ($filter == 'all' || $filter == '') {
+        $filterTasks = $tasks;
+    };
+    return $filterTasks;
+};
+
 ?>

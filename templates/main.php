@@ -28,10 +28,10 @@
 
         <div class="tasks-controls">
             <nav class="tasks-switch">
-                <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-                <a href="/" class="tasks-switch__item">Повестка дня</a>
-                <a href="/" class="tasks-switch__item">Завтра</a>
-                <a href="/" class="tasks-switch__item">Просроченные</a>
+                <a href="/index.php?filter=all&?id=<?=$safeId?>" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
+                <a href="/index.php?filter=today&?id=<?=$safeId?>" class="tasks-switch__item">Повестка дня</a>
+                <a href="/index.php?filter=tommorow&?id=<?=$safeId?>" class="tasks-switch__item">Завтра</a>
+                <a href="/index.php?filter=expired&?id=<?=$safeId?>" class="tasks-switch__item">Просроченные</a>
             </nav>
 
             <label class="checkbox">
