@@ -25,14 +25,14 @@ if (isset($_POST['submit'])) {
   foreach ($required_fields as $field) {
     if (empty($_POST[$field])) {
         $errors[$field] = 'Поле не заполнено';
-    }
+    };
   };
 
   if (is_date_valid($_POST['date']) == false) {
     $errors['date'] = 'Неверный формат даты';
   };
 
-  if (strtotime($_POST['date']) + $oneDay < time()) {
+  if (strtotime($_POST['date']) + 86400 < time()) {
     $errors['date'] = 'Введите корректную дату';
   };
   

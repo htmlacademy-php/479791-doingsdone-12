@@ -1,6 +1,6 @@
 <?php
 // показывать или нет выполненные задачи
-$showCompleteTasks = rand(0, 1);
+
 include 'functions.php';
 $userName = NULL;
 session_start();
@@ -11,6 +11,18 @@ if (isset($_SESSION['id'])) {
     $connect = connect();
     $projects = getProjects($connect, $userID);
     $allTasks = getTasks($connect, $userID);
+ 
+    if (isset($_GET['show_completed'])) {
+        $safeShowCompleteTask = filter_input(INPUT_GET, 'show_completed', FILTER_SANITIZE_NUMBER_INT);
+        $showCompleteTasks = $safeShowCompleteTask;
+    };
+   
+    if (isset($_GET['task_id'])) {
+        $safeTaskId = filter_input(INPUT_GET, 'task_id', FILTER_SANITIZE_NUMBER_INT);
+        switchTaskDone($connect ,$safeTaskId);
+        header ('Location: index.php');
+    };
+
     if (isset($_GET['submitSearch'])) {
         $tasks = getSearchTasks($connect, $_GET['searchTasks'], $userID);
     } else {
@@ -21,10 +33,10 @@ if (isset($_SESSION['id'])) {
             $tasks = getProjectTasks($connect, $safeId, $allTasks, $userID);
         };
     };
-    var_dump($_GET['filter']);
-    var_dump($_GET['id']);
-    var_dump($safeId);
-    $tasks = filterTasks($tasks, $_GET['filter']);
+
+    $safeFilter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_SPECIAL_CHARS);
+    
+    $tasks = filterTasks($tasks, $safeFilter);
 
     $projectsIds = getProjectsID($connect, $userID);
 
@@ -35,7 +47,7 @@ if (isset($_SESSION['id'])) {
     array_push($idsArray, null);
 
     if(in_array($id, $idsArray)) {
-        $pageContent = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'allTasks' => $allTasks, 'showCompleteTasks' => $showCompleteTasks, 'safeId' => $safeId]);
+        $pageContent = include_template('main.php', ['projects' => $projects, 'tasks' => $tasks, 'allTasks' => $allTasks, 'showCompleteTasks' => $showCompleteTasks, 'safeId' => $safeId, 'safeFilter' => $safeFilter]);
         } else {
             $pageContent = include_template('404.php',); 
             http_response_code(404);

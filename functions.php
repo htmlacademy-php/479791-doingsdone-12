@@ -225,12 +225,11 @@ function addProject($connect, $userId, $projectName) {
 };
 
 //фильтрация задач
-$oneDay = 86400;
 
 function filterToday($tasks) {
     $filterTasks = [];
     foreach ($tasks as $task):
-        if($task['task_deadline'] == time()) {
+        if(strtotime($task['task_deadline']) == strtotime(date('Y-m-d'))) {
             array_push($filterTasks, $task);
         };
     endforeach;
@@ -240,7 +239,7 @@ function filterToday($tasks) {
 function filterTommorow($tasks) {
     $filterTasks = [];
     foreach ($tasks as $task):
-        if(strtotime($task['task_deadline']) == time() + $oneDay) {
+        if(strtotime($task['task_deadline']) == strtotime(date('Y-m-d')) + 86400) {
             array_push($filterTasks, $task);
         };
     endforeach;
@@ -250,7 +249,7 @@ function filterTommorow($tasks) {
 function filterExpired($tasks) {
     $filterTasks = [];
     foreach ($tasks as $task):
-        if(strtotime($task['task_deadline']) < time()) {
+        if(strtotime($task['task_deadline']) < strtotime(date('Y-m-d'))) {
             array_push($filterTasks, $task);
         };
     endforeach;
@@ -262,7 +261,6 @@ function filterTasks($tasks, $filter){
 
     if ($filter == 'today') {
         $filterTasks = filterToday($tasks);
-        var_dump($filterTasks);
     };
 
     if ($filter == 'tommorow') {
@@ -279,4 +277,55 @@ function filterTasks($tasks, $filter){
     return $filterTasks;
 };
 
+//переключает задачу на выполненную и обратно
+
+function GetTaskDone($connect, $taskId) {
+    if (!$connect) {
+        $error = mysqli_connect_error();
+        print("Ошибка подключения к базе данных " . $error);
+        };
+    $sqlTakDone = "UPDATE tasks SET task_done = 1 WHERE id = $taskId";;
+    $result = mysqli_query($connect, $sqlTakDone);
+
+    if(!$result) {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    };
+};
+
+function GetTaskUndone($connect, $taskId) {
+    if (!$connect) {
+        $error = mysqli_connect_error();
+        print("Ошибка подключения к базе данных " . $error);
+        };
+    $sqlTakUndone = "UPDATE tasks SET task_done = 0 WHERE id = $taskId";;
+    $result = mysqli_query($connect, $sqlTakUndone);
+
+    if(!$result) {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    };
+};
+
+
+function switchTaskDone($connect ,$taskId) {
+    if (!$connect) {
+    $error = mysqli_connect_error();
+    print("Ошибка подключения к базе данных " . $error);
+    } 
+    $checkTaskDone = "SELECT task_done FROM tasks WHERE id = $taskId";
+    $result = mysqli_query($connect, $checkTaskDone);
+
+    if($result) {
+        $taskDone = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    }; 
+    if ($taskDone[0]['task_done'] == '0') {
+        GetTaskDone($connect, $taskId);
+    } else {
+        GetTaskUndone($connect, $taskId);
+        };
+};
 ?>
