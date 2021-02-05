@@ -61,5 +61,3 @@ $pageContent = include_template('addTask.php', ['errors' => $errors, 'projects' 
 $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке", 'userName' => $userName]); 
 
 print($layoutContent);
-
-?>

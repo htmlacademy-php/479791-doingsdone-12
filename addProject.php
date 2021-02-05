@@ -39,5 +39,3 @@ $pageContent = include_template('addProject.php', ['errors' => $errors, 'project
 $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке", 'userName' => $userName]); 
 
 print($layoutContent);
-
-?>

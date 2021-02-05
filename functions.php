@@ -56,22 +56,6 @@ if (!$connect) {
 return $connect;
 };
 
-//узнаём имя юзера
-function getUserName($connect, $userId) {
-    $userName = '';
-    $sqlUserInfo = "SELECT user_name FROM users WHERE id = $userId";
-    $result = mysqli_query($connect, $sqlUserInfo);
-
-    if($result) {
-        $userInfo = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        $userName = $userInfo[0]['user_name'];
-    } else {
-        $error = mysqli_error($connect);
-        print ("Ошибка MySQL" . $error);
-    } 
-    return $userName;
-};
-
 //узнаём данные юзеров
 function getUsersInfo($connect) {
     $usersInfo = [];
@@ -328,4 +312,3 @@ function switchTaskDone($connect ,$taskId) {
         GetTaskUndone($connect, $taskId);
         };
 };
-?>

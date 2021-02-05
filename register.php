@@ -41,5 +41,3 @@ $pageContent = include_template('registerForm.php', ['errors' => $errors]);
 $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке"]); 
 
 print($layoutContent);
-
-?>

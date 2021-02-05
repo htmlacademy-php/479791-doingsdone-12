@@ -7,14 +7,16 @@ session_start();
 if (isset($_SESSION['id'])) {
     $userID = $_SESSION['id'];
     $userName = $_SESSION['user'];
-    
+    $showCompleteTasks = (int)$_SESSION['show_complete_tasks'];
+   
     $connect = connect();
     $projects = getProjects($connect, $userID);
     $allTasks = getTasks($connect, $userID);
  
     if (isset($_GET['show_completed'])) {
-        $safeShowCompleteTask = filter_input(INPUT_GET, 'show_completed', FILTER_SANITIZE_NUMBER_INT);
+        $safeShowCompleteTask = filter_input(INPUT_GET, 'show_completed', FILTER_VALIDATE_INT);
         $showCompleteTasks = $safeShowCompleteTask;
+        $_SESSION['show_complete_tasks'] = $safeShowCompleteTask;
     };
    
     if (isset($_GET['task_id'])) {
@@ -59,4 +61,3 @@ if (isset($_SESSION['id'])) {
 $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке", 'userName' => $userName]);
 
 print($layoutContent);
-?>

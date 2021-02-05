@@ -26,6 +26,7 @@ if (isset($_POST['submit'])) {
             session_start();
             $_SESSION['id'] = $user['id'];
             $_SESSION['user'] = $user['user_name'];
+            $_SESSION['show_complete_tasks'] = $user['show_complete_tasks'];
             header ('Location: index.php');
           } else {
             $errors['password'] = 'Введите верный пароль';
@@ -39,5 +40,3 @@ $pageContent = include_template('authForm.php', ['errors' => $errors]);
 $layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке"]); 
 
 print($layoutContent);
-
-?>
