@@ -14,7 +14,8 @@ CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_name VARCHAR(128) NOT NULL,
     e_mail VARCHAR(128) NOT NULL UNIQUE,
-    user_password CHAR(60) NOT NULL
+    user_password CHAR(60) NOT NULL,
+    show_complete_tasks tinyint(1) default 1,
 );
 
 CREATE TABLE tasks (
