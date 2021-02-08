@@ -4,7 +4,7 @@
 
     <nav class="main-navigation">
       <ul class="main-navigation__list">
-      <?php foreach ($projects as $project): ?>
+        <?php foreach ($projects as $project) : ?>
             <li class="main-navigation__list-item <?= ($project['id'] == $_GET['id']) ? 'main-navigation__list-item--active':''?>">
                 <a class="main-navigation__list-item-link" href="/?id=<?=$project['id']; ?>"><?= $project['project_name'] ?></a>
                 <span class="main-navigation__list-item-count"><?= count_task($allTasks, $project['id'])?></span>
@@ -23,18 +23,23 @@
       <div class="form__row">
         <label class="form__label" for="name">Название <sup>*</sup></label>
         
-        <input class="form__input <?php if(isset($errors['name'])): ?>'form__input--error'<?php endif;?>" type="text" name="name" id="name" value="<?= isset($_POST['name']) ? ($_POST['name']) : ''; ?>" placeholder="Введите название">
+        <input class="form__input <?php if (isset($errors['name'])) : ?>
+              'form__input--error'<?php endif;?>" type="text" name="name" id="name" value="<?= isset($_POST['name']) ? ($_POST['name']) : ''; ?>" placeholder="Введите название">
         <p class="form__message"><?=$errors['name'] ?></p>
       </div>
 
       <div class="form__row">
         <label class="form__label" for="project">Проект <sup>*</sup></label>
 
-        <select class="form__input form__input--select <?php if(isset($errors['project'])): ?>'form__input--error'<?php endif;?>" name="project" id="project">
-        <?php foreach ($projects as $project): ?>
-          <?php if ($project['id'] == '1') {continue;} ?>
-          <option value="<?= $project['id'] ?>"><?= $project['project_name'] ?></option>
-        <?php endforeach; ?>  
+        <select class="form__input form__input--select  <?php if (isset($errors['project'])) : ?>
+                                    'form__input--error'<?php endif;?>" name="project" id="project">
+<?php foreach ($projects as $project) : ?>
+    <?php if ($project['id'] == '1') {
+        continue;
+    }
+?>
+  <option value="<?= $project['id'] ?>"><?= $project['project_name'] ?></option>
+<?php endforeach; ?>  
         </select>
         <p class="form__message"><?=$errors['project'] ?></p>
       </div>
@@ -42,7 +47,8 @@
       <div class="form__row">
         <label class="form__label" for="date">Дата выполнения</label>
 
-        <input class="form__input form__input--date <?php if(isset($errors['date'])): ?>'form__input--error'<?php endif;?>" type="text" name="date" id="date" value="<?= isset($_POST['date']) ? ($_POST['date']) : ''; ?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+        <input class="form__input form__input--date <?php if (isset($errors['date'])) : ?>
+                                'form__input--error'<?php endif;?>" type="text" name="date" id="date" value="<?= isset($_POST['date']) ? ($_POST['date']) : ''; ?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
         <p class="form__message"><?=$errors['date'] ?></p>
       </div>
 
