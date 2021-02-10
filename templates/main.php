@@ -6,8 +6,8 @@
             <ul class="main-navigation__list">
             <?php foreach ($projects as $project) : ?>
                 <li class="main-navigation__list-item <?= ($project['id'] == $_GET['id']) ? 'main-navigation__list-item--active':''?>">
-                    <a class="main-navigation__list-item-link" href="/?id=<?=$project['id']; ?>"><?= $project['project_name'] ?></a>
-                    <span class="main-navigation__list-item-count"><?= count_task($allTasks, $project['id'])?></span>
+                    <a class="main-navigation__list-item-link" href="/?id=<?=$project['id']; ?>"><?= htmlspecialchars($project['project_name']) ?></a>
+                    <span class="main-navigation__list-item-count"><?= countTask($allTasks, $project['id'])?></span>
                 </li>
             <?php endforeach; ?>
             </ul>
@@ -15,6 +15,8 @@
 
         <a class="button button--transparent button--plus content__side-button"
             href="/addProject.php" target="project_add">Добавить проект</a>
+        <a class="button button--transparent button--plus content__side-button"
+            href="/notify.php" target="project_add">Проверить отправку E-mail </a>
     </section>
 
     <main class="content__main">
@@ -54,7 +56,7 @@
             <?php if ($task['task_done'] === '1' && $showCompleteTasks === 0) {
                 continue;
             } ?>
-            <tr class="tasks__item task <?= ($task['task_done'] === '1') ? 'task--completed':''?> <?= ($task['task_done'] !== '1') && !empty($task['task_deadline']) && (date_overdue($task['task_deadline']) <= 24) ? 'task--important':''?>">
+            <tr class="tasks__item task <?= ($task['task_done'] === '1') ? 'task--completed':''?> <?= ($task['task_done'] !== '1') && !empty($task['task_deadline']) && (dateOverdue($task['task_deadline']) <= 24) ? 'task--important':''?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input task__checkbox visually-hidden" type="checkbox" value="<?=$task['id']?>">

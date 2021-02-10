@@ -7,7 +7,7 @@
         <?php foreach ($projects as $project) : ?>
             <li class="main-navigation__list-item <?= ($project['id'] == $_GET['id']) ? 'main-navigation__list-item--active':''?>">
                 <a class="main-navigation__list-item-link" href="/?id=<?=$project['id']; ?>"><?= $project['project_name'] ?></a>
-                <span class="main-navigation__list-item-count"><?= count_task($allTasks, $project['id'])?></span>
+                <span class="main-navigation__list-item-count"><?= countTask($allTasks, $project['id'])?></span>
             </li>
         <?php endforeach; ?>
       </ul>

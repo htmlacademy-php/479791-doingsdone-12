@@ -14,13 +14,13 @@ if (isset($_POST['submit'])) {
     };
   
     if (!empty($_POST['email'])) {
-        if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) == false) {
+        if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
             $errors['email'] = 'Введите корректный Email';
         };
 
         foreach ($users as $user) {
-            if ($user['e_mail'] == $_POST['email']) {
-                $errors['email'] = 'Пользователь с этим Email уже зарегестрирован';
+            if ($user['e_mail'] === $_POST['email']) {
+                $errors['email'] = 'Пользователь с этим Email уже зарегистрирован';
             };
         };
     };
@@ -36,7 +36,12 @@ if (isset($_POST['submit'])) {
     };
 };
 
-$pageContent = include_template('registerForm.php', ['errors' => $errors]);
-$layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке"]);
+$pageContent = includeTemplate('registerForm.php', [
+    'errors' => $errors,
+    ]);
+$layoutContent = includeTemplate('layout.php', [
+    'content' => $pageContent,
+    'title' => "Дела в порядке",
+    ]);
 
 print($layoutContent);

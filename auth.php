@@ -1,7 +1,6 @@
 <?php
 include 'functions.php';
 $connect = connect();
-$users = getUsersInfo($connect);
 
 $required_fields = ['email', 'password'];
 $errors = [];
@@ -14,27 +13,28 @@ if (isset($_POST['submit'])) {
     };
   
     if (!empty($_POST['email'])) {
-        if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) == false) {
+        if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) {
             $errors['email'] = 'Введите корректный Email';
         };
-
-        foreach ($users as $user) {
-            if ($user['e_mail'] == $_POST['email']) {
-                if (password_verify($_POST['password'], $user['user_password'])) {
-                    session_start();
-                    $_SESSION['id'] = $user['id'];
-                    $_SESSION['user'] = $user['user_name'];
-                    $_SESSION['show_complete_tasks'] = $user['show_complete_tasks'];
-                    header('Location: index.php');
-                } else {
-                    $errors['password'] = 'Введите верный пароль';
-                };
-            };
+        $user = getUserInfo($connect, $_POST['email']);
+        if (password_verify($_POST['password'], $user[0]['user_password'])) {
+            session_start();
+            $_SESSION['id'] = $user[0]['id'];
+            $_SESSION['user'] = $user[0]['user_name'];
+            $_SESSION['show_complete_tasks'] = $user[0]['show_complete_tasks'];
+            header('Location: index.php');
+        } else {
+            $errors['password'] = 'Введите верный пароль';
         };
     };
 };
 
-$pageContent = include_template('authForm.php', ['errors' => $errors]);
-$layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке"]);
+$pageContent = includeTemplate('authForm.php', [
+    'errors' => $errors,
+    ]);
+$layoutContent = includeTemplate('layout.php', [
+    'content' => $pageContent,
+    'title' => "Дела в порядке",
+    ]);
 
 print($layoutContent);
