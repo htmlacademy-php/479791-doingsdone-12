@@ -24,15 +24,15 @@ foreach ($users as $user) {
     ];
 };
 
-foreach ($dataToSend as $userData) {
+foreach ($dataToSend as $taskData) {
     $message = new Swift_Message();
     $message->setSubject("Уведомление от сервиса «Дела в порядке»");
     $message->setFrom('keks@phpdemo.ru');
-    $message->setTo($userData['email']);
+    $message->setTo($taskData['email']);
 
-    $message_content = 'Уважаемый, ' . $userData['name'] .'<br>';
+    $message_content = 'Уважаемый, ' . $taskData['name'] .'<br>';
 
-    foreach ($userData['tasks'] as $task) {
+    foreach ($taskData['tasks'] as $task) {
         $message_content .= 'У вас запланирована задача: ';
         $message_content .=  $task['title'];
         $message_content .= ' на ' . date('d.m.Y', strtotime($task['deadline']));
@@ -40,12 +40,11 @@ foreach ($dataToSend as $userData) {
     }
 
     $message->addPart($message_content . '<br>', 'text/html');
-}
+    $result = $mailer->send($message);
 
-$result = $mailer->send($message);
-
-if ($result) {
-    print("Рассылка успешно отправлена");
-} else {
-    print("Не удалось отправить рассылку: " . $logger->dump());
+    if ($result) {
+        print("Рассылка для " . $dataToSend[$user['id']]['name'] . " успешно отправлена");
+    } else {
+        print("Не удалось отправить рассылку для " . $dataToSend[$user['id']]['name'] . " : " . $logger->dump());
+    }
 }
