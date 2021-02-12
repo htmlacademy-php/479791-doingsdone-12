@@ -43,8 +43,8 @@ foreach ($dataToSend as $taskData) {
     $result = $mailer->send($message);
 
     if ($result) {
-        print("Рассылка для " . $dataToSend[$user['id']]['name'] . " успешно отправлена");
+        print("Рассылка для " . $taskData['name'] . " успешно отправлена");
     } else {
-        print("Не удалось отправить рассылку для " . $dataToSend[$user['id']]['name'] . " : " . $logger->dump());
+        print("Не удалось отправить рассылку для " . $taskData['name'] . " : " . $logger->dump());
     }
 }
