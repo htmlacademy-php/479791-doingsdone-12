@@ -30,16 +30,16 @@ foreach ($dataToSend as $taskData) {
     $message->setFrom('keks@phpdemo.ru');
     $message->setTo($taskData['email']);
 
-    $message_content = 'Уважаемый, ' . $taskData['name'] .'<br>';
+    $messageСontent = 'Уважаемый, ' . $taskData['name'] .'<br>';
 
     foreach ($taskData['tasks'] as $task) {
-        $message_content .= 'У вас запланирована задача: ';
-        $message_content .=  $task['title'];
-        $message_content .= ' на ' . date('d.m.Y', strtotime($task['deadline']));
-        $message_content .= '<br>';
+        $messageСontent .= 'У вас запланирована задача: ';
+        $messageСontent .=  $task['title'];
+        $messageСontent .= ' на ' . date('d.m.Y', strtotime($task['deadline']));
+        $messageСontent .= '<br>';
     }
 
-    $message->addPart($message_content . '<br>', 'text/html');
+    $message->addPart($messageСontent . '<br>', 'text/html');
     $result = $mailer->send($message);
 
     if ($result) {
