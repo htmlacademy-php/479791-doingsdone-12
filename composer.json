@@ -1,0 +1,15 @@
+{
+    "name": "roman/doingsdone",
+    "description": "Site for manage tasks",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "nothingvrs",
+            "email": "b00M_vrs@mail.ru"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.0"
+    }
+}

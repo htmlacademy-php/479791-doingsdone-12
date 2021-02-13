@@ -13,9 +13,9 @@ $projects = getProjects($connect, $userID);
 $allTasks = getTasks($connect, $userID);
 $projectsIds = getProjectsID($connect, $userID);
 $idsArray = [];
-foreach ($projectsIds as $projectId) :
+foreach ($projectsIds as $projectId) {
     array_push($idsArray, $projectId['id']);
-endforeach;
+};
 
 $required_fields = ['name', 'project'];
 $errors = [];
@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
         };
     };
 
-    if (is_date_valid($_POST['date']) == false) {
+    if (isDateValid($_POST['date']) === false) {
         $errors['date'] = 'Неверный формат даты';
     };
 
@@ -56,7 +56,15 @@ if (isset($_POST['submit'])) {
     };
 }
 
-$pageContent = include_template('addTask.php', ['errors' => $errors, 'projects' => $projects, 'allTasks' => $allTasks]);
-$layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке", 'userName' => $userName]);
+$pageContent = includeTemplate('addTask.php', [
+    'errors' => $errors,
+    'projects' => $projects,
+    'allTasks' => $allTasks,
+    ]);
+$layoutContent = includeTemplate('layout.php', [
+    'content' => $pageContent,
+    'title' => "Дела в порядке",
+    'userName' => $userName,
+    ]);
 
 print($layoutContent);

@@ -6,15 +6,16 @@ if (!isset($_SESSION['id'])) {
     exit;
 };
 $userID = $_SESSION['id'];
+$userName = $_SESSION['user'];
 
 $connect = connect();
 $projects = getProjects($connect, $userID);
 $allTasks = getTasks($connect, $userID);
 
 $projectsNames = [];
-foreach ($projects as $project) :
+foreach ($projects as $project) {
     array_push($projectsNames, mb_strtolower($project['project_name']));
-endforeach;
+};
 
 $errors = [];
 
@@ -23,7 +24,7 @@ if (isset($_POST['submitProject'])) {
         $errors['name'] = 'Поле не заполнено';
     };
   
-    if (in_array(mb_strtolower($_POST['name']), $projectsNames)) {
+    if (in_array(mb_strtolower($_POST['name']), $projectsNames, true)) {
         $errors['name'] = 'Такой проект уже существует';
     };
 
@@ -34,7 +35,15 @@ if (isset($_POST['submitProject'])) {
     };
 };
 
-$pageContent = include_template('addProject.php', ['errors' => $errors, 'projects' => $projects, 'allTasks' => $allTasks]);
-$layoutContent = include_template('layout.php', ['content' => $pageContent, 'title' => "Дела в порядке", 'userName' => $userName]);
+$pageContent = includeTemplate('addProject.php', [
+    'errors' => $errors,
+    'projects' => $projects,
+    'allTasks' => $allTasks,
+    ]);
+$layoutContent = includeTemplate('layout.php', [
+    'content' => $pageContent,
+    'title' => "Дела в порядке",
+    'userName' => $userName,
+    ]);
 
 print($layoutContent);

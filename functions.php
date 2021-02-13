@@ -1,5 +1,5 @@
 <?php
-function include_template($name, array $data = [])
+function includeTemplate($name, array $data = [])
 {
     $name = 'templates/' . $name;
     $result = '';
@@ -15,9 +15,9 @@ function include_template($name, array $data = [])
     $result = ob_get_clean();
 
     return $result;
-};
+}
 
-function count_task($arr, $project)
+function countTask($arr, $project)
 {
     $count = 0;
     foreach ($arr as $task) {
@@ -26,29 +26,29 @@ function count_task($arr, $project)
         }
     };
     return($count);
-};
+}
 
-function date_overdue($date)
+function dateOverdue($date)
 {
     if ($date !== null) {
         $diff = strtotime($date) - strtotime("now");
         $hours_count = floor($diff/3600);
         return $hours_count;
     };
-};
+}
 
-function is_date_valid(string $date) : bool
+function isDateValid(string $date) : bool
 {
     $format_to_check = 'Y-m-d';
     $dateTimeObj = date_create_from_format($format_to_check, $date);
 
     return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
-};
+}
 
 function getPostVal($name)
 {
     return $_POST[$name] ?? "";
-};
+}
 
 function connect()
 {
@@ -60,9 +60,26 @@ function connect()
         print("Ошибка подключения к базе данных " . $error);
     }
     return $connect;
-};
+}
+
+//узнаём данные юзера по мэйлу
+function getUserInfo($connect, $userMail)
+{
+    $usersInfo = [];
+    $sqlUsersInfo = "SELECT * FROM users WHERE e_mail = '$userMail'";
+    $result = mysqli_query($connect, $sqlUsersInfo);
+
+    if ($result) {
+        $usersInfo = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    }
+    return $usersInfo;
+}
 
 //узнаём данные юзеров
+
 function getUsersInfo($connect)
 {
     $usersInfo = [];
@@ -76,7 +93,7 @@ function getUsersInfo($connect)
         print ("Ошибка MySQL" . $error);
     }
     return $usersInfo;
-};
+}
 
 //добавляем проекты
 function getProjects($connect, $userId)
@@ -92,7 +109,7 @@ function getProjects($connect, $userId)
         print ("Ошибка MySQL" . $error);
     }
     return $projects;
-};
+}
 
 //все задачи одного пользователя
 function getTasks($connect, $userId)
@@ -108,7 +125,7 @@ function getTasks($connect, $userId)
         print ("Ошибка MySQL" . $error);
     }
     return $allTasks;
-};
+}
 
 //показываем задачи из проекта
 function getProjectTasks($connect, $id, $allTasks, $userId)
@@ -125,7 +142,7 @@ function getProjectTasks($connect, $id, $allTasks, $userId)
         print ("Ошибка MySQL" . $error);
     }
     return $tasks;
-};
+}
 
 //все id проектов
 function getProjectsID($connect, $userId)
@@ -141,7 +158,7 @@ function getProjectsID($connect, $userId)
         print ("Ошибка MySQL" . $error);
     }
     return $projectsIds;
-};
+}
 
 //добавляем задачу
 function addTask($connect, $projectId, $userId, $taskName, $date, $fileUrl)
@@ -160,7 +177,7 @@ function addTask($connect, $projectId, $userId, $taskName, $date, $fileUrl)
         $error = mysqli_error($connect);
         print ("Ошибка MySQL" . $error);
     }
-};
+}
 
 //добавляем пользователя
 
@@ -180,7 +197,7 @@ function addUser($connect, $name, $email, $password)
         $error = mysqli_error($connect);
         print ("Ошибка MySQL" . $error);
     }
-};
+}
 
 //ищем задачи по поиску
 
@@ -199,7 +216,7 @@ function getSearchTasks($connect, $searchWord, $userId)
         print ("Ошибка MySQL" . $error);
     }
     return $tasks;
-};
+}
 
 //добавляем проект
 
@@ -218,42 +235,42 @@ function addProject($connect, $userId, $projectName)
         $error = mysqli_error($connect);
         print ("Ошибка MySQL" . $error);
     }
-};
+}
 
 //фильтрация задач
 
 function filterToday($tasks)
 {
     $filterTasks = [];
-    foreach ($tasks as $task) :
+    foreach ($tasks as $task) {
         if (strtotime($task['task_deadline']) == strtotime(date('Y-m-d'))) {
             array_push($filterTasks, $task);
         };
-    endforeach;
+    };
     return $filterTasks;
-};
+}
 
 function filterTommorow($tasks)
 {
     $filterTasks = [];
-    foreach ($tasks as $task) :
+    foreach ($tasks as $task) {
         if (strtotime($task['task_deadline']) == strtotime(date('Y-m-d')) + 86400) {
             array_push($filterTasks, $task);
         };
-    endforeach;
+    };
     return $filterTasks;
-};
+}
 
 function filterExpired($tasks)
 {
     $filterTasks = [];
-    foreach ($tasks as $task) :
+    foreach ($tasks as $task) {
         if (strtotime($task['task_deadline']) < strtotime(date('Y-m-d'))) {
             array_push($filterTasks, $task);
         };
-    endforeach;
+    };
     return $filterTasks;
-};
+}
 
 function filterTasks($tasks, $filter)
 {
@@ -275,7 +292,7 @@ function filterTasks($tasks, $filter)
         $filterTasks = $tasks;
     };
     return $filterTasks;
-};
+}
 
 //переключает задачу на выполненную и обратно
 
@@ -292,7 +309,7 @@ function GetTaskDone($connect, $taskId)
         $error = mysqli_error($connect);
         print ("Ошибка MySQL" . $error);
     };
-};
+}
 
 function GetTaskUndone($connect, $taskId)
 {
@@ -307,8 +324,7 @@ function GetTaskUndone($connect, $taskId)
         $error = mysqli_error($connect);
         print ("Ошибка MySQL" . $error);
     };
-};
-
+}
 
 function switchTaskDone($connect, $taskId)
 {
@@ -330,4 +346,23 @@ function switchTaskDone($connect, $taskId)
     } else {
         GetTaskUndone($connect, $taskId);
     };
-};
+}
+
+//получаем пользователей с задачами на сегодня
+
+function getUsersTasksToday($connect)
+{
+    $usersTasksToday = [];
+    $sqlTasksToday = "SELECT users.id, users.user_name, users.e_mail, tasks.task_name , tasks.task_deadline
+    FROM users JOIN tasks ON tasks.user_id = users.id 
+    WHERE tasks.task_done = '0' AND tasks.task_deadline = CURRENT_DATE()";
+    $result = mysqli_query($connect, $sqlTasksToday);
+
+    if ($result) {
+        $usersTasksToday = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($connect);
+        print ("Ошибка MySQL" . $error);
+    }
+    return $usersTasksToday;
+}

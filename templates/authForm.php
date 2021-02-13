@@ -14,7 +14,7 @@
         <label class="form__label" for="email">E-mail <sup>*</sup></label>
 
         <input class="form__input <?php if (isset($errors['email'])) : ?>
-              'form__input--error'<?php endif;?>" type="text" name="email" id="email" value="" placeholder="Введите e-mail">
+              'form__input--error'<?php endif;?>" type="text" name="email" id="email" value="<?= isset($_POST['email']) ? ($_POST['email']) : ''; ?>" placeholder="Введите e-mail">
 
         <p class="form__message"><?=$errors['email'] ?></p>
       </div>
@@ -23,7 +23,7 @@
         <label class="form__label" for="password">Пароль <sup>*</sup></label>
 
         <input class="form__input <?php if (isset($errors['password'])) : ?>
-              'form__input--error'<?php endif;?>" type="password" name="password" id="password" value="" placeholder="Введите пароль">
+              'form__input--error'<?php endif;?>" type="password" name="password" id="password" value="<?= isset($_POST['password']) ? ($_POST['password']) : ''; ?>" placeholder="Введите пароль">
           <p class="form__message"><?=$errors['password'] ?></p>
         </div>
 
