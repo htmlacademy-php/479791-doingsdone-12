@@ -74,7 +74,7 @@
                     <?= (!empty($task['task_deadline'])) ? strftime("%d.%m.%Y", strtotime($task['task_deadline'])):'' ?>
                 </td>
             </tr>
-        <?php endforeach; ?>
+        <?php endforeach;?>
         </table>
     </main>
 </div>
