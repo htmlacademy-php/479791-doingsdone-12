@@ -16,11 +16,11 @@ $users = getUsersTasksToday($connect);
 $dataToSend = [];
 
 foreach ($users as $user) {
-    $dataToSend[$user['id']]['name'] = $user['user_name'];
-    $dataToSend[$user['id']]['email'] = $user['e_mail'];
+    $dataToSend[$user['id']]['name'] = $user['user_name'] ?? '';
+    $dataToSend[$user['id']]['email'] = $user['e_mail'] ?? '';
     $dataToSend[$user['id']]['tasks'][] = [
-        'title' => $user['task_name'],
-        'deadline' => $user['task_deadline']
+        'title' => $user['task_name'] ?? '',
+        'deadline' => $user['task_deadline'] ?? '',
     ];
 };
 
@@ -30,12 +30,12 @@ foreach ($dataToSend as $taskData) {
     $message->setFrom('keks@phpdemo.ru');
     $message->setTo($taskData['email']);
 
-    $messageСontent = 'Уважаемый, ' . $taskData['name'] .'<br>';
+    $messageСontent = 'Уважаемый, ' . ($taskData['name'] ?? '') .'<br>';
 
     foreach ($taskData['tasks'] as $task) {
         $messageСontent .= 'У вас запланирована задача: ';
-        $messageСontent .=  $task['title'];
-        $messageСontent .= ' на ' . date('d.m.Y', strtotime($task['deadline']));
+        $messageСontent .=  $task['title'] ?? '';
+        $messageСontent .= ' на ' . date('d.m.Y', strtotime($task['deadline'] ?? ''));
         $messageСontent .= '<br>';
     }
 
@@ -43,8 +43,8 @@ foreach ($dataToSend as $taskData) {
     $result = $mailer->send($message);
 
     if ($result) {
-        print("Рассылка для " . $taskData['name'] . " успешно отправлена");
+        print("Рассылка для " . ($taskData['name'] ?? '') . " успешно отправлена");
     } else {
-        print("Не удалось отправить рассылку для " . $taskData['name'] . " : " . $logger->dump());
+        print("Не удалось отправить рассылку для " . ($taskData['name'] ?? '') . " : " . $logger->dump());
     }
 }

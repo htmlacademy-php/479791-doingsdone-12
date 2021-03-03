@@ -5,10 +5,9 @@ include 'functions.php';
 $userName = null;
 session_start();
 if (isset($_SESSION['id'])) {
-    $userID = $_SESSION['id'];
-    $userName = $_SESSION['user'];
-    $showCompleteTasks = (int)$_SESSION['show_complete_tasks'];
-   
+    $userID = $_SESSION['id'] ?? '';
+    $userName = $_SESSION['user'] ?? '';
+    $showCompleteTasks = (int)$_SESSION['show_complete_tasks'] ?? '';
     $connect = connect();
     $projects = getProjects($connect, $userID);
     $allTasks = getTasks($connect, $userID);
@@ -26,13 +25,14 @@ if (isset($_SESSION['id'])) {
     };
 
     if (isset($_GET['submitSearch'])) {
-        $tasks = getSearchTasks($connect, $_GET['searchTasks'], $userID);
+        $searchTasks = filter_input(INPUT_GET, 'searchTasks', FILTER_SANITIZE_SPECIAL_CHARS);
+        $tasks = getSearchTasks($connect, $searchTasks, $userID);
     } else {
         $safeId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-        if ($safeId == '') {
+        if ($safeId === null) {
             $tasks = $allTasks;
         } else {
-            $tasks = getProjectTasks($connect, $safeId, $allTasks, $userID);
+            $tasks = getProjectTasks($connect, $safeId, $userID);
         };
     };
 
@@ -44,7 +44,7 @@ if (isset($_SESSION['id'])) {
 
     $idsArray = [];
     foreach ($projectsIds as $projectId) {
-        array_push($idsArray, $projectId['id']);
+        array_push($idsArray, $projectId['id'] ?? '');
     };
     array_push($idsArray, null);
    
