@@ -29,7 +29,7 @@ class="body-background"
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
-                        <p><?=$userName?></p>       
+                        <p><?=htmlspecialchars($userName)?></p>       
                         <a href="/logout.php">Выйти</a>
                     </div>
                 </div>

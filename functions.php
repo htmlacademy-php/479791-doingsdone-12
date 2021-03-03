@@ -1,4 +1,10 @@
 <?php
+/**
+ * Шаблонизатор
+ * @param $name
+ * @param $data
+ * @return false|string
+ */
 function includeTemplate($name, array $data = [])
 {
     $name = 'templates/' . $name;
@@ -17,6 +23,12 @@ function includeTemplate($name, array $data = [])
     return $result;
 }
 
+/**
+ * Подсчёт задач в проекте
+ * @param $arr
+ * @param $project
+ * @return integer
+ */
 function countTask($arr, $project)
 {
     $count = 0;
@@ -28,6 +40,11 @@ function countTask($arr, $project)
     return($count);
 }
 
+/**
+ * Проверка задач на просроченный дедлайн
+ * @param $date
+ * @return integer
+ */
 function dateOverdue($date)
 {
     if ($date !== null) {
@@ -37,6 +54,11 @@ function dateOverdue($date)
     };
 }
 
+/**
+ * Проверяет правильность введённой даты
+ * @param $date
+ * @return bool
+ */
 function isDateValid(string $date) : bool
 {
     $format_to_check = 'Y-m-d';
@@ -45,11 +67,20 @@ function isDateValid(string $date) : bool
     return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
 }
 
+/**
+ * Возвращает введённое значение в поле формы при ошибке в форме
+ * @param $name
+ * @return string
+ */
 function getPostVal($name)
 {
     return $_POST[$name] ?? "";
 }
 
+/**
+ * Подключение к базе данных
+ * @return mysqli|false
+ */
 function connect()
 {
     $connect = mysqli_connect('localhost', 'root', 'root', 'doingsdone');
@@ -62,11 +93,17 @@ function connect()
     return $connect;
 }
 
-//узнаём данные юзера по мэйлу
+/**
+ * Узнаём данные юзера по мэйлу
+ * @param $connect
+ * @param $userMail
+ * @return array
+ */
 function getUserInfo($connect, $userMail)
 {
     $usersInfo = [];
-    $sqlUsersInfo = "SELECT * FROM users WHERE e_mail = '$userMail'";
+    $safeUserMail = mysqli_real_escape_string($connect, $userMail);
+    $sqlUsersInfo = "SELECT * FROM users WHERE e_mail = '$safeUserMail'";
     $result = mysqli_query($connect, $sqlUsersInfo);
 
     if ($result) {
@@ -78,8 +115,11 @@ function getUserInfo($connect, $userMail)
     return $usersInfo;
 }
 
-//узнаём данные юзеров
-
+/**
+ * Узнаём данные юзеров
+ * @param $connect
+ * @return array
+ */
 function getUsersInfo($connect)
 {
     $usersInfo = [];
@@ -95,11 +135,17 @@ function getUsersInfo($connect)
     return $usersInfo;
 }
 
-//добавляем проекты
+/**
+ * Узнаём проекты пользователю
+ * @param $connect
+ * @param $userId
+ * @return array
+ */
 function getProjects($connect, $userId)
 {
     $projects = [];
-    $sqlProjects = "SELECT * FROM projects WHERE user_id = $userId";
+    $safeUserId = mysqli_real_escape_string($connect, $userId);
+    $sqlProjects = "SELECT * FROM projects WHERE user_id = $safeUserId";
     $result = mysqli_query($connect, $sqlProjects);
 
     if ($result) {
@@ -111,11 +157,17 @@ function getProjects($connect, $userId)
     return $projects;
 }
 
-//все задачи одного пользователя
+/**
+ * Узнаём все задачи одного пользователя
+ * @param $connect
+ * @param $userId
+ * @return array
+ */
 function getTasks($connect, $userId)
 {
     $allTasks = [];
-    $sqlTasks = "SELECT * FROM tasks WHERE user_id = $userId ORDER BY id DESC";
+    $safeUserId = mysqli_real_escape_string($connect, $userId);
+    $sqlTasks = "SELECT * FROM tasks WHERE user_id = $safeUserId ORDER BY id DESC";
     $result = mysqli_query($connect, $sqlTasks);
 
     if ($result) {
@@ -127,12 +179,20 @@ function getTasks($connect, $userId)
     return $allTasks;
 }
 
-//показываем задачи из проекта
-function getProjectTasks($connect, $id, $allTasks, $userId)
+/**
+ * Узнаём все задачи проекта
+ * @param $connect
+ * @param $id
+ * @param $allTasks
+ * @param $userId
+ * @return array
+ */
+function getProjectTasks($connect, $id, $userId)
 {
     $tasks = [];
-
-    $sqlTasks = "SELECT * FROM tasks WHERE user_id = $userId AND project_id = $id ORDER BY id DESC";
+    $safeId = mysqli_real_escape_string($connect, $id);
+    $safeUserId = mysqli_real_escape_string($connect, $userId);
+    $sqlTasks = "SELECT * FROM tasks WHERE user_id = $safeUserId AND project_id = $safeId ORDER BY id DESC";
     $result = mysqli_query($connect, $sqlTasks);
 
     if ($result) {
@@ -144,11 +204,17 @@ function getProjectTasks($connect, $id, $allTasks, $userId)
     return $tasks;
 }
 
-//все id проектов
+/**
+ * Узнаём все ID проектов
+ * @param $connect
+ * @param $userId
+ * @return array
+ */
 function getProjectsID($connect, $userId)
 {
     $projectsIds = [];
-    $sqlProjectsIds = "SELECT id FROM projects WHERE user_id = $userId";
+    $safeUserId = mysqli_real_escape_string($connect, $userId);
+    $sqlProjectsIds = "SELECT id FROM projects WHERE user_id = $safeUserId";
     $result = mysqli_query($connect, $sqlProjectsIds);
 
     if ($result) {
@@ -160,7 +226,16 @@ function getProjectsID($connect, $userId)
     return $projectsIds;
 }
 
-//добавляем задачу
+/**
+ * Добавляем задачу в проект
+ * @param $connect
+ * @param $projectId
+ * @param $userId
+ * @param $taskName
+ * @param $date
+ * @param $fileUrl
+ * @return void
+ */
 function addTask($connect, $projectId, $userId, $taskName, $date, $fileUrl)
 {
 
@@ -170,7 +245,11 @@ function addTask($connect, $projectId, $userId, $taskName, $date, $fileUrl)
     }
     $safeTaskName = mysqli_real_escape_string($connect, $taskName);
     $safeFileUrl = mysqli_real_escape_string($connect, $fileUrl);
-    $sqlAddTask = "INSERT INTO tasks (project_id, user_id, task_name, task_deadline, file) VALUES ($projectId, $userId, '$safeTaskName', '$date', '$safeFileUrl')";
+    if ($date === null) {
+        $sqlAddTask = "INSERT INTO tasks (project_id, user_id, task_name, task_deadline, file) VALUES ($projectId, $userId, '$safeTaskName', null, '$safeFileUrl')";
+    } else {
+        $sqlAddTask = "INSERT INTO tasks (project_id, user_id, task_name, task_deadline, file) VALUES ($projectId, $userId, '$safeTaskName', '$date', '$safeFileUrl')";
+    };
     $result = mysqli_query($connect, $sqlAddTask);
 
     if (!$result) {
@@ -179,8 +258,14 @@ function addTask($connect, $projectId, $userId, $taskName, $date, $fileUrl)
     }
 }
 
-//добавляем пользователя
-
+/**
+ * Добавляем пользователя
+ * @param $connect
+ * @param $name
+ * @param $email
+ * @param $password
+ * @return void
+ */
 function addUser($connect, $name, $email, $password)
 {
 
@@ -199,8 +284,13 @@ function addUser($connect, $name, $email, $password)
     }
 }
 
-//ищем задачи по поиску
-
+/**
+ * Ищем задачи по поиску
+ * @param $connect
+ * @param $searchWord
+ * @param $userId
+ * @return array
+ */
 function getSearchTasks($connect, $searchWord, $userId)
 {
     $tasks = [];
@@ -218,8 +308,14 @@ function getSearchTasks($connect, $searchWord, $userId)
     return $tasks;
 }
 
-//добавляем проект
 
+/**
+ * Добавляем проект пользователю
+ * @param $connect
+ * @param $userId
+ * @param $projectName
+ * @return void
+ */
 function addProject($connect, $userId, $projectName)
 {
 
@@ -237,72 +333,98 @@ function addProject($connect, $userId, $projectName)
     }
 }
 
-//фильтрация задач
 
+/**
+ * Фильтрация задач на сегодня
+ * @param $tasks
+ * @return array
+ */
 function filterToday($tasks)
 {
     $filterTasks = [];
     foreach ($tasks as $task) {
-        if (strtotime($task['task_deadline']) == strtotime(date('Y-m-d'))) {
+        if (strtotime($task['task_deadline'] ?? '') === strtotime(date('Y-m-d'))) {
             array_push($filterTasks, $task);
         };
     };
     return $filterTasks;
 }
 
+
+/**
+ * Фильтрация задач на завтра
+ * @param $tasks
+ * @return array
+ */
 function filterTommorow($tasks)
 {
     $filterTasks = [];
     foreach ($tasks as $task) {
-        if (strtotime($task['task_deadline']) == strtotime(date('Y-m-d')) + 86400) {
+        if (strtotime($task['task_deadline'] ?? '') === strtotime(date('Y-m-d')) + 86400) {
             array_push($filterTasks, $task);
         };
     };
     return $filterTasks;
 }
 
+/**
+ * Фильтрация просроченных задач
+ * @param $tasks
+ * @return array
+ */
 function filterExpired($tasks)
 {
     $filterTasks = [];
     foreach ($tasks as $task) {
-        if (strtotime($task['task_deadline']) < strtotime(date('Y-m-d'))) {
+        if (strtotime($task['task_deadline'] ?? '') < strtotime(date('Y-m-d')) && $task['task_deadline'] !== null) {
             array_push($filterTasks, $task);
         };
     };
     return $filterTasks;
 }
 
+/**
+ * Фильтрация задач по фильтрам
+ * @param $tasks
+ * @param $filter
+ * @return array
+ */
 function filterTasks($tasks, $filter)
 {
     $filterTasks = [];
 
-    if ($filter == 'today') {
+    if ($filter === 'today') {
         $filterTasks = filterToday($tasks);
     };
 
-    if ($filter == 'tommorow') {
+    if ($filter === 'tommorow') {
         $filterTasks = filterTommorow($tasks);
     };
 
-    if ($filter == 'expired') {
+    if ($filter === 'expired') {
         $filterTasks = filterExpired($tasks);
     };
 
-    if ($filter == 'all' || $filter == '') {
+    if ($filter === 'all' || $filter == '') {
         $filterTasks = $tasks;
     };
     return $filterTasks;
 }
 
-//переключает задачу на выполненную и обратно
-
+/**
+ * Устанавливает статус задачи - выполненная  
+ * @param $connect
+ * @param $taskId
+ * @return void
+ */
 function GetTaskDone($connect, $taskId)
 {
     if (!$connect) {
         $error = mysqli_connect_error();
         print("Ошибка подключения к базе данных " . $error);
     };
-    $sqlTakDone = "UPDATE tasks SET task_done = 1 WHERE id = $taskId";
+    $safeTaskId = mysqli_real_escape_string($connect, $taskId);
+    $sqlTakDone = "UPDATE tasks SET task_done = 1 WHERE id = $safeTaskId";
     $result = mysqli_query($connect, $sqlTakDone);
 
     if (!$result) {
@@ -311,13 +433,20 @@ function GetTaskDone($connect, $taskId)
     };
 }
 
+/**
+ * Устанавливает статус задачи - невыполненная 
+ * @param $connect
+ * @param $taskId
+ * @return void
+ */
 function GetTaskUndone($connect, $taskId)
 {
     if (!$connect) {
         $error = mysqli_connect_error();
         print("Ошибка подключения к базе данных " . $error);
     };
-    $sqlTakUndone = "UPDATE tasks SET task_done = 0 WHERE id = $taskId";
+    $safeTaskId = mysqli_real_escape_string($connect, $taskId);
+    $sqlTakUndone = "UPDATE tasks SET task_done = 0 WHERE id = $safeTaskId";
     $result = mysqli_query($connect, $sqlTakUndone);
 
     if (!$result) {
@@ -326,13 +455,20 @@ function GetTaskUndone($connect, $taskId)
     };
 }
 
+/**
+ * Переключает задачу на выполненную и обратно 
+ * @param $connect
+ * @param $taskId
+ * @return void
+ */
 function switchTaskDone($connect, $taskId)
 {
     if (!$connect) {
         $error = mysqli_connect_error();
         print("Ошибка подключения к базе данных " . $error);
     }
-    $checkTaskDone = "SELECT task_done FROM tasks WHERE id = $taskId";
+    $safeTaskId = mysqli_real_escape_string($connect, $taskId);
+    $checkTaskDone = "SELECT task_done FROM tasks WHERE id = $safeTaskId";
     $result = mysqli_query($connect, $checkTaskDone);
 
     if ($result) {
@@ -341,15 +477,18 @@ function switchTaskDone($connect, $taskId)
         $error = mysqli_error($connect);
         print ("Ошибка MySQL" . $error);
     };
-    if ($taskDone[0]['task_done'] == '0') {
+    if (($taskDone[0]['task_done'] ?? null) === '0') {
         GetTaskDone($connect, $taskId);
     } else {
         GetTaskUndone($connect, $taskId);
     };
 }
 
-//получаем пользователей с задачами на сегодня
-
+/**
+ * Получаем задачи запланированные на сегодня и список пользователей 
+ * @param $connect
+ * @return array
+ */
 function getUsersTasksToday($connect)
 {
     $usersTasksToday = [];

@@ -1,7 +1,7 @@
 <div class="content">
 
   <section class="content__side">
-    <p class="content__side-info">Если у вас уже нет аккаунта, зарегистрируйтесь на сайте</p>
+    <p class="content__side-info">Если у вас нет аккаунта, зарегистрируйтесь на сайте</p>
 
     <a class="button button--transparent content__side-button" href="/register.php">Зарегистрироваться</a>
   </section>
@@ -14,17 +14,17 @@
         <label class="form__label" for="email">E-mail <sup>*</sup></label>
 
         <input class="form__input <?php if (isset($errors['email'])) : ?>
-              'form__input--error'<?php endif;?>" type="text" name="email" id="email" value="<?= isset($_POST['email']) ? ($_POST['email']) : ''; ?>" placeholder="Введите e-mail">
+              'form__input--error'<?php endif;?>" type="text" name="email" id="email" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" placeholder="Введите e-mail">
 
-        <p class="form__message"><?=$errors['email'] ?></p>
+        <p class="form__message"><?=$errors['email'] ?? '' ?></p>
       </div>
 
       <div class="form__row">
         <label class="form__label" for="password">Пароль <sup>*</sup></label>
 
         <input class="form__input <?php if (isset($errors['password'])) : ?>
-              'form__input--error'<?php endif;?>" type="password" name="password" id="password" value="<?= isset($_POST['password']) ? ($_POST['password']) : ''; ?>" placeholder="Введите пароль">
-          <p class="form__message"><?=$errors['password'] ?></p>
+              'form__input--error'<?php endif;?>" type="password" name="password" id="password" value="<?= isset($_POST['password']) ? htmlspecialchars($_POST['password']) : ''; ?>" placeholder="Введите пароль">
+          <p class="form__message"><?=$errors['password'] ?? '' ?></p>
         </div>
 
       <div class="form__row form__row--controls">

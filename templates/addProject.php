@@ -5,9 +5,9 @@
     <nav class="main-navigation">
       <ul class="main-navigation__list">
         <?php foreach ($projects as $project) : ?>
-            <li class="main-navigation__list-item <?= ($project['id'] == $_GET['id']) ? 'main-navigation__list-item--active':''?>">
-                <a class="main-navigation__list-item-link" href="/?id=<?=$project['id']; ?>"><?= $project['project_name'] ?></a>
-                <span class="main-navigation__list-item-count"><?= countTask($allTasks, $project['id'])?></span>
+            <li class="main-navigation__list-item">
+                <a class="main-navigation__list-item-link" href="/?id=<?=$project['id'] ?? ''; ?>"><?= htmlspecialchars($project['project_name'] ?? '') ?></a>
+                <span class="main-navigation__list-item-count"><?= countTask($allTasks, $project['id'] ?? '')?></span>
             </li>
         <?php endforeach; ?>
       </ul>
@@ -22,9 +22,9 @@
       <div class="form__row">
         <label class="form__label" for="project_name">Название <sup>*</sup></label>
 
-        <input class="form__input <?php if (isset($errors['name'])) : ?>
-              'form__input--error'<?php endif;?>" type="text" name="name" id="project_name" value="<?= isset($_POST['name']) ? ($_POST['name']) : ''; ?>" placeholder="Введите название проекта">
-        <p class="form__message"><?=$errors['name'] ?></p>
+        <input class="form__input <?php if (!empty($errors)) : ?>
+              'form__input--error'<?php endif;?>" type="text" name="name" id="project_name" value="<?= isset($_POST['name']) ? htmlspecialchars(($_POST['name'])) : ''; ?>" placeholder="Введите название проекта">
+        <p class="form__message"><?=$errors['name'] ?? '' ?></p>
         </div>
 
       <div class="form__row form__row--controls">

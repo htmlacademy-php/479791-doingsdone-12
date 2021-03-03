@@ -11,5 +11,8 @@
     ],
     "require": {
         "swiftmailer/swiftmailer": "^6.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.5"
     }
 }
