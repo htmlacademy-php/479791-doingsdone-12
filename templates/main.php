@@ -5,8 +5,6 @@
         <nav class="main-navigation">
             <ul class="main-navigation__list">
             <?php foreach ($projects as $project) : ?>
-            <?php var_dump($safeId)?>
-            <?php var_dump($project['id'])?>
                 <li class="main-navigation__list-item <?= (($project['id'] ?? '') === $safeId) ? 'main-navigation__list-item--active':''?>">
                     <a class="main-navigation__list-item-link" href="/?id=<?=$project['id'] ?? ''; ?>"><?= htmlspecialchars($project['project_name'] ?? '') ?></a>
                     <span class="main-navigation__list-item-count"><?= countTask($allTasks, $project['id'] ?? '')?></span>
