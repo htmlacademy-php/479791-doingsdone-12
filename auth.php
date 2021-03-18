@@ -6,7 +6,6 @@ $required_fields = ['email', 'password'];
 $errors = [];
 
 if (isset($_POST['submit'])) {
-
     foreach ($required_fields as $field) {
         if (empty($_POST[$field])) {
             $errors[$field] = 'Поле не заполнено';

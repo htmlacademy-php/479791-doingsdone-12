@@ -1,6 +1,4 @@
 <?php
-// показывать или нет выполненные задачи
-
 include 'functions.php';
 $userName = null;
 session_start();
@@ -11,6 +9,7 @@ if (isset($_SESSION['id'])) {
     $connect = connect();
     $projects = getProjects($connect, $userID);
     $allTasks = getTasks($connect, $userID);
+    $safeId = null;
  
     if (isset($_GET['show_completed'])) {
         $safeShowCompleteTask = filter_input(INPUT_GET, 'show_completed', FILTER_VALIDATE_INT);

@@ -38,7 +38,9 @@ if (isset($_POST['submit'])) {
         if (strtotime($date) + 86400 < time()) {
             $errors['date'] = 'Введите корректную дату';
         };
-    } else $date = NULL;
+    } else {
+        $date = null;
+    };
 
     if (!in_array($project, $idsArray)) {
         $errors['project'] = 'Такого проекта не существует';

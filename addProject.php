@@ -24,7 +24,6 @@ if (isset($_POST['submitProject'])) {
     if (empty($projectName)) {
         $errors['name'] = 'Поле не заполнено';
     };
-    var_dump($projectName);
     if (in_array(mb_strtolower($projectName), $projectsNames, true)) {
         $errors['name'] = 'Такой проект уже существует';
     };

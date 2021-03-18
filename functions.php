@@ -116,26 +116,6 @@ function getUserInfo($connect, $userMail)
 }
 
 /**
- * Узнаём данные юзеров
- * @param $connect
- * @return array
- */
-function getUsersInfo($connect)
-{
-    $usersInfo = [];
-    $sqlUsersInfo = "SELECT * FROM users";
-    $result = mysqli_query($connect, $sqlUsersInfo);
-
-    if ($result) {
-        $usersInfo = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    } else {
-        $error = mysqli_error($connect);
-        print ("Ошибка MySQL" . $error);
-    }
-    return $usersInfo;
-}
-
-/**
  * Узнаём проекты пользователю
  * @param $connect
  * @param $userId
